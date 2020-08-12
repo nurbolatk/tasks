@@ -9,8 +9,13 @@
 :root {
   font-size: 62.5%;
   box-sizing: border-box;
+  --bg-color: #{$gray-9};
+  --text-color: #{$white};
+  --secondary-text-color: #{$gray-3};
 }
 
 body {
   font-size: 1.6rem;
+  color: var(--text-color);
+  background-color: slateblue;
 }

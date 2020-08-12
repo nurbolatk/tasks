@@ -1,5 +1,5 @@
 .app {
-  background-color: slateblue;
+  background-color: var(--bg-color);
   height: 100vh;
   display: grid;
   grid-template-areas:
@@ -11,7 +11,7 @@
 
 .topbar {
   grid-area: topbar;
-  background-color: #2d3035;
+  background-color: $gray-8;
 }
 
 .sidebar {
@@ -26,11 +26,12 @@
 
 .content {
   grid-area: content;
-  background-color: yellow;
+  background-color: var(--bg-color);
+  overflow-y: auto;
 }
 
 .card {
   background-color: white;
   margin: 2rem;
-  height: 30rem;
+  height: 4rem;
 }
