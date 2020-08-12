@@ -11,17 +11,20 @@
 
 .topbar {
   grid-area: topbar;
-  background-color: $gray-8;
+  background-color: var(--secondary-bg-color);
+  border-bottom: 1px solid var(--line-color);
 }
 
 .sidebar {
   grid-area: sidebar;
-  background-color: khaki;
+  background-color: var(--secondary-bg-color);
+  border-right: 1px solid var(--line-color);
 }
 
 .menu {
   grid-area: menu;
-  background-color: tomato;
+  background-color: var(--secondary-bg-color);
+  border-right: 1px solid var(--line-color);
 }
 
 .content {
