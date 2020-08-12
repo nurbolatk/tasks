@@ -1,4 +1,16 @@
-const timeout = 2000
+const todosJson = localStorage.getItem('todos')
+let todos = []
+const updateTodosLocalStorage = () => {
+  localStorage.setItem('todos', JSON.stringify(todos))
+}
+
+if (!todosJson) {
+  updateTodosLocalStorage()
+} else {
+  todos = JSON.parse(todosJson)
+}
+
+const timeout = 200
 
 const api = {
   post: (endpoint, body) => {
@@ -44,13 +56,11 @@ const api = {
 export default api
 
 const createTodo = body => {
-  return 'New todo!'
+  const newArrayLength = todos.push({ text: body }) // returns new length
+  updateTodosLocalStorage()
+  return todos[newArrayLength - 1]
 }
 
 const getAllTodos = () => {
-  return [
-    {
-      text: 'Create fake api',
-    },
-  ]
+  return todos
 }
