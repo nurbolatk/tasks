@@ -1,0 +1,36 @@
+.app {
+  background-color: slateblue;
+  height: 100vh;
+  display: grid;
+  grid-template-areas:
+    'topbar topbar topbar'
+    'sidebar menu content';
+  grid-template-rows: 7rem 1fr;
+  grid-template-columns: 9rem 28rem 1fr;
+}
+
+.topbar {
+  grid-area: topbar;
+  background-color: #2d3035;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: khaki;
+}
+
+.menu {
+  grid-area: menu;
+  background-color: tomato;
+}
+
+.content {
+  grid-area: content;
+  background-color: yellow;
+}
+
+.card {
+  background-color: white;
+  margin: 2rem;
+  height: 30rem;
+}
