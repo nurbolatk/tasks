@@ -2,14 +2,20 @@
   padding: 0.8rem 1.6rem;
   border: 1px solid transparent;
   border-radius: var(--border-radius);
-
+  --button-bg: #{$white};
+  // --button-bg-hover: #{darken(var(--button-bg), 20%)};
+  // --button-bg-hover: #{hsl(var(--button-bg), 10%)};
+  background-color: var(--button-bg);
+  transition: opacity 0.2s;
   &:hover {
     cursor: pointer;
+    opacity: 0.9;
+    // background-color: var(--button-bg-hover);
   }
 
   // variants
   &-primary {
-    background-color: var(--color-primary);
+    --button-bg: var(--color-primary);
     color: var(--text-color);
   }
 }
