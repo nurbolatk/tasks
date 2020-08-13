@@ -1,0 +1,269 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+:root {
+  font-size: 62.5%;
+  box-sizing: border-box;
+  --bg-color: #22252a;
+  --secondary-bg-color: #2d3035;
+  --text-color: #fff;
+  --secondary-text-color: #999999;
+  --line-color: #313439;
+  --color-primary: #389bff;
+  --border-radius: 3px; }
+
+body {
+  font-size: 1.6rem;
+  color: var(--text-color);
+  background-color: slateblue;
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; }
+
+.app {
+  background-color: var(--bg-color);
+  height: 100vh;
+  display: grid;
+  grid-template-areas: 'topbar topbar topbar' 'sidebar menu content';
+  grid-template-rows: 7rem 1fr;
+  grid-template-columns: 9rem 28rem 1fr; }
+
+.topbar {
+  grid-area: topbar;
+  background-color: var(--secondary-bg-color);
+  border-bottom: 1px solid var(--line-color); }
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: var(--secondary-bg-color);
+  border-right: 1px solid var(--line-color); }
+
+.menu {
+  grid-area: menu;
+  background-color: var(--secondary-bg-color);
+  border-right: 1px solid var(--line-color); }
+
+.content {
+  grid-area: content;
+  background-color: var(--bg-color);
+  overflow-y: auto;
+  padding: 3rem; }
+
+.card {
+  background-color: var(--secondary-bg-color);
+  border-radius: 1px solid var(--border-radius);
+  padding: 2.8rem;
+  border: 1px solid #1f2228; }
+
+.form-label {
+  display: flex;
+  margin-bottom: 0.5 rem; }
+
+.form-field {
+  background-color: #1f2228;
+  border-radius: var(--border-radius);
+  padding: 1.2rem 2rem;
+  display: block;
+  border: 1px solid #1f2228;
+  color: var(--text-color);
+  width: 100%; }
+  .form-field:focus, .form-field:active {
+    outline: none;
+    border: 1px solid var(--color-primary); }
+
+.ml-0 {
+  margin-left: 0rem; }
+
+.ml-1 {
+  margin-left: 0.25rem; }
+
+.ml-2 {
+  margin-left: 0.5rem; }
+
+.ml-3 {
+  margin-left: 1rem; }
+
+.ml-4 {
+  margin-left: 1.5rem; }
+
+.ml-5 {
+  margin-left: 3rem; }
+
+.mt-0 {
+  margin-top: 0rem; }
+
+.mt-1 {
+  margin-top: 0.25rem; }
+
+.mt-2 {
+  margin-top: 0.5rem; }
+
+.mt-3 {
+  margin-top: 1rem; }
+
+.mt-4 {
+  margin-top: 1.5rem; }
+
+.mt-5 {
+  margin-top: 3rem; }
+
+.mb-0 {
+  margin-bottom: 0rem; }
+
+.mb-1 {
+  margin-bottom: 0.25rem; }
+
+.mb-2 {
+  margin-bottom: 0.5rem; }
+
+.mb-3 {
+  margin-bottom: 1rem; }
+
+.mb-4 {
+  margin-bottom: 1.5rem; }
+
+.mb-5 {
+  margin-bottom: 3rem; }
+
+.mr-0 {
+  margin-right: 0rem; }
+
+.mr-1 {
+  margin-right: 0.25rem; }
+
+.mr-2 {
+  margin-right: 0.5rem; }
+
+.mr-3 {
+  margin-right: 1rem; }
+
+.mr-4 {
+  margin-right: 1.5rem; }
+
+.mr-5 {
+  margin-right: 3rem; }
+
+.m-0 {
+  margin: 0rem; }
+
+.m-1 {
+  margin: 0.25rem; }
+
+.m-2 {
+  margin: 0.5rem; }
+
+.m-3 {
+  margin: 1rem; }
+
+.m-4 {
+  margin: 1.5rem; }
+
+.m-5 {
+  margin: 3rem; }
+
+.pl-0 {
+  margin-left: 0rem; }
+
+.pl-1 {
+  margin-left: 0.25rem; }
+
+.pl-2 {
+  margin-left: 0.5rem; }
+
+.pl-3 {
+  margin-left: 1rem; }
+
+.pl-4 {
+  margin-left: 1.5rem; }
+
+.pl-5 {
+  margin-left: 3rem; }
+
+.pt-0 {
+  margin-top: 0rem; }
+
+.pt-1 {
+  margin-top: 0.25rem; }
+
+.pt-2 {
+  margin-top: 0.5rem; }
+
+.pt-3 {
+  margin-top: 1rem; }
+
+.pt-4 {
+  margin-top: 1.5rem; }
+
+.pt-5 {
+  margin-top: 3rem; }
+
+.pb-0 {
+  margin-bottom: 0rem; }
+
+.pb-1 {
+  margin-bottom: 0.25rem; }
+
+.pb-2 {
+  margin-bottom: 0.5rem; }
+
+.pb-3 {
+  margin-bottom: 1rem; }
+
+.pb-4 {
+  margin-bottom: 1.5rem; }
+
+.pb-5 {
+  margin-bottom: 3rem; }
+
+.pr-0 {
+  margin-right: 0rem; }
+
+.pr-1 {
+  margin-right: 0.25rem; }
+
+.pr-2 {
+  margin-right: 0.5rem; }
+
+.pr-3 {
+  margin-right: 1rem; }
+
+.pr-4 {
+  margin-right: 1.5rem; }
+
+.pr-5 {
+  margin-right: 3rem; }
+
+.p-0 {
+  margin: 0rem; }
+
+.p-1 {
+  margin: 0.25rem; }
+
+.p-2 {
+  margin: 0.5rem; }
+
+.p-3 {
+  margin: 1rem; }
+
+.p-4 {
+  margin: 1.5rem; }
+
+.p-5 {
+  margin: 3rem; }
+
+.btn {
+  padding: 0.8rem 1.6rem;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius);
+  --button-bg: #fff;
+  background-color: var(--button-bg);
+  transition: opacity 0.2s; }
+  .btn:hover {
+    cursor: pointer;
+    opacity: 0.9; }
+  .btn-primary {
+    --button-bg: var(--color-primary);
+    color: var(--text-color); }

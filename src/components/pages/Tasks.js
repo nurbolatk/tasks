@@ -9,14 +9,14 @@ const Tasks = () => {
   const match = useRouteMatch()
   return (
     <>
-      <div className='menu'>
-        <div className='p-3'>
-          <button className='btn btn-primary w-100'>Add task</button>
+      <div className="menu">
+        <div className="p-4">
+          <button className="btn btn-primary w-100">Add task</button>
           <Link to={`${match.url}/create`}>Add task</Link>
           <Link to={match.url}>All tasks</Link>
         </div>
       </div>
-      <div className='content'>
+      <div className="content">
         <Switch>
           <Route path={`${match.path}/create`}>
             <CreateTask />

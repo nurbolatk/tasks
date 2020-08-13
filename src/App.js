@@ -11,14 +11,14 @@ import Tasks from './components/pages/Tasks'
 const App = () => {
   return (
     <Router>
-      <div className='app'>
+      <div className="app">
         <Topbar />
         <Sidebar />
         <Switch>
-          <Route path='/books'>
+          <Route path="/books">
             <Books />
           </Route>
-          <Route path='/tasks'>
+          <Route path="/tasks">
             <Tasks />
           </Route>
         </Switch>
