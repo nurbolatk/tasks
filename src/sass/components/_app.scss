@@ -39,26 +39,34 @@
   border-radius: 1px solid var(--border-radius);
   padding: 2.8rem;
   border: 1px solid $gray-10;
+
+  &-title {
+    font-size: 3rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+  }
 }
 
 .form {
   &-label {
     display: flex;
     margin-bottom: 0.5rem;
+    margin-left: 2px;
   }
   &-field {
     background-color: $gray-10;
     border-radius: var(--border-radius);
     padding: 1.2rem 2rem;
     display: block;
-    border: 1px solid $gray-10;
+    border: 2px solid $gray-10;
     color: var(--text-color);
     width: 100%;
+    transition: border 0.2s;
 
     &:focus,
     &:active {
       outline: none;
-      border: 1px solid var(--color-primary);
+      border: 2px solid rgba($blue, 0.5);
     }
   }
 }
