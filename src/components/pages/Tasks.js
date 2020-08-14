@@ -1,19 +1,32 @@
 import React from 'react'
 // import Content from '../molecules/Content'
 // import Menu from '../organisms/Menu'
-import { Switch, Route, Link, useRouteMatch } from 'react-router-dom'
+import {
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useHistory,
+} from 'react-router-dom'
 import CreateTask from './CreateTask'
 import TaskList from './TaskList'
 
 const Tasks = () => {
   const match = useRouteMatch()
+  const history = useHistory()
+
   return (
     <>
       <div className="menu">
         <div className="p-4">
-          <button className="btn btn-primary w-100">Add task</button>
+          <button
+            onClick={() => {
+              history.push(`${match.url}/create`)
+            }}
+            className="btn btn-primary w-100">
+            Add task
+          </button>
         </div>
-        <Link to={`${match.url}/create`}>Add task</Link>
         <Link to={match.url}>All tasks</Link>
       </div>
       <div className="content">
