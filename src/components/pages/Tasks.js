@@ -12,9 +12,9 @@ const Tasks = () => {
       <div className="menu">
         <div className="p-4">
           <button className="btn btn-primary w-100">Add task</button>
-          <Link to={`${match.url}/create`}>Add task</Link>
-          <Link to={match.url}>All tasks</Link>
         </div>
+        <Link to={`${match.url}/create`}>Add task</Link>
+        <Link to={match.url}>All tasks</Link>
       </div>
       <div className="content">
         <Switch>

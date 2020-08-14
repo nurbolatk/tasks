@@ -1,8 +1,10 @@
+// Spacing
+//
 // List of sizes to generate for each
 $spacing: 1rem;
 $sizes: [0, 0.5, 1, 1.5, 2, 3];
 
-@mixin generateSizing($prefix, $property) {
+@mixin generateSpacing($prefix, $property) {
   @for $i from 1 through length($sizes) {
     $size: nth($sizes, $i);
 
@@ -12,7 +14,7 @@ $sizes: [0, 0.5, 1, 1.5, 2, 3];
   }
 }
 
-@mixin generateSizingDouble($prefix) {
+@mixin generateSpacingDouble($prefix) {
   @for $i from 1 through length($sizes) {
     $size: nth($sizes, $i);
     .#{$prefix}x-#{$i - 1} {
@@ -30,11 +32,73 @@ $marginrules: [ [ml, margin-left], [mt, margin-top], [mb, margin-bottom], [mr,
   margin-right], [m, margin], ];
 
 @each $item in $marginrules {
-  @include generateSizing(nth($item, 1), nth($item, 2));
+  @include generateSpacing(nth($item, 1), nth($item, 2));
 }
 @each $item in $paddingrules {
-  @include generateSizing(nth($item, 1), nth($item, 2));
+  @include generateSpacing(nth($item, 1), nth($item, 2));
 }
 
-@include generateSizingDouble(m);
-@include generateSizingDouble(p);
+@include generateSpacingDouble(m);
+@include generateSpacingDouble(p);
+
+// Sizing
+//
+$utilities: (
+  'width': (
+    property: width,
+    class: w,
+    values: (
+      25: 25%,
+      50: 50%,
+      75: 75%,
+      100: 100%,
+      auto: auto,
+    ),
+  ),
+);
+
+@mixin generate-utility($utility) {
+  $values: map-get(
+    $map: $utility,
+    $key: values,
+  );
+
+  // If the values are a list or string, convert it into a map
+  @if type-of($values) == 'string' or type-of(nth($values, 1)) != 'list' {
+    $values: zip($values, $values);
+  }
+  // @error 'values of this utility #{$values}';
+  @each $key, $value in $values {
+    $properties: map-get($utility, property);
+    // Multiple properties are possible, for example with vertical or horizontal margins or paddings
+    @if type-of($properties) == 'string' {
+      $properties: append((), $properties); // turn into list
+    }
+
+    // Use custom class if present else use first property
+    $property-class: if(
+      map-has-key($utility, class),
+      map-get($utility, class),
+      nth($properties, 1)
+    );
+    // If non of them exists, make it empty string?
+    // $property-class: if($property-class == null, '', $property-class);
+
+    // Don't prefix if value key is null (eg. with shadow class)
+    // $property-class-modifier: if($key, if($property-class == "" and $infix == "", "", "-") + $key, "");
+
+    // Don't prefix if value key is null (eg. with shadow class)
+    // $property-class-modifier: if($key, '-' + $key, '');
+    $property-class-modifier: '-' + $key;
+    // @if $value != null {
+    .#{$property-class + $property-class-modifier} {
+      @each $property in $properties {
+        #{$property}: $value !important;
+      }
+    }
+    // }
+    // @error '#{$property-class-modifier}';
+  }
+}
+
+@include generate-utility(map-get($utilities, 'width'));
