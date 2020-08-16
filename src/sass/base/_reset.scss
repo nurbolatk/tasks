@@ -12,8 +12,8 @@
   font-size: 62.5%;
   box-sizing: border-box;
   --bg-color: #{$gray-9};
-  --secondary-bg-color: #{$gray-8};
-  --text-color: #{$white};
+  --secondary-bg-color: #{$color-bg-secondary};
+  --text-color: #{$color-text};
   --secondary-text-color: #{$gray-3};
   --line-color: #{$gray-2};
 
@@ -28,4 +28,17 @@ body {
   background-color: slateblue;
   font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu,
     Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+button {
+  font-size: inherit;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: $line;
+  margin: 0 2rem;
+  padding: 0;
 }
