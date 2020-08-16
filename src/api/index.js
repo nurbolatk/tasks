@@ -55,10 +55,10 @@ const api = {
 
 export default api
 
-const createTask = body => {
-  const newArrayLength = tasks.push({ text: body }) // returns new length
+const createTask = task => {
+  tasks = [...tasks, task]
   updateTasksLocalStorage()
-  return tasks[newArrayLength - 1]
+  return tasks[tasks.length - 1]
 }
 
 const getAllTasks = () => {
