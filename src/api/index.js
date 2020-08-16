@@ -1,13 +1,13 @@
-const todosJson = localStorage.getItem('todos')
-let todos = []
-const updateTodosLocalStorage = () => {
-  localStorage.setItem('todos', JSON.stringify(todos))
+const tasksJson = localStorage.getItem('tasks')
+let tasks = []
+const updateTasksLocalStorage = () => {
+  localStorage.setItem('tasks', JSON.stringify(tasks))
 }
 
-if (!todosJson) {
-  updateTodosLocalStorage()
+if (!tasksJson) {
+  updateTasksLocalStorage()
 } else {
-  todos = JSON.parse(todosJson)
+  tasks = JSON.parse(tasksJson)
 }
 
 const timeout = 200
@@ -17,10 +17,10 @@ const api = {
     return new Promise((resolve, reject) =>
       setTimeout(() => {
         switch (endpoint) {
-          case '/todos':
+          case '/tasks':
             resolve({
               status: 200,
-              data: createTodo(body),
+              data: createTask(body),
             })
             break
           default:
@@ -36,10 +36,10 @@ const api = {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         switch (endpoint) {
-          case '/todos':
+          case '/tasks':
             resolve({
               status: 200,
-              data: getAllTodos(),
+              data: getAllTasks(),
             })
             break
           default:
@@ -55,12 +55,12 @@ const api = {
 
 export default api
 
-const createTodo = body => {
-  const newArrayLength = todos.push({ text: body }) // returns new length
-  updateTodosLocalStorage()
-  return todos[newArrayLength - 1]
+const createTask = body => {
+  const newArrayLength = tasks.push({ text: body }) // returns new length
+  updateTasksLocalStorage()
+  return tasks[newArrayLength - 1]
 }
 
-const getAllTodos = () => {
-  return todos
+const getAllTasks = () => {
+  return tasks
 }

@@ -6,27 +6,27 @@ import Sidebar from './components/organisms/Sidebar'
 // import Menu from './components/organisms/Menu'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Books from './components/pages/Books'
-import Tasks from './components/pages/Tasks'
+import Tasks from './features/tasks/Tasks'
 
 const App = () => {
-  return (
-    <Router>
-      <div className="app">
-        <Topbar />
-        <Sidebar />
-        <Switch>
-          <Route path="/books">
-            <Books />
-          </Route>
-          <Route path="/tasks">
-            <Tasks />
-          </Route>
-        </Switch>
-        {/* <Menu />
+    return (
+        <Router>
+            <div className="app">
+                <Topbar />
+                <Sidebar />
+                <Switch>
+                    <Route path="/books">
+                        <Books />
+                    </Route>
+                    <Route path="/tasks">
+                        <Tasks />
+                    </Route>
+                </Switch>
+                {/* <Menu />
         <Content /> */}
-      </div>
-    </Router>
-  )
+            </div>
+        </Router>
+    )
 }
 
 export default App
