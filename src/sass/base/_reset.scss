@@ -19,7 +19,7 @@
 
   --color-primary: #{$blue};
 
-  --border-radius: 3px;
+  --border-radius: #{$border-radius};
 }
 
 body {

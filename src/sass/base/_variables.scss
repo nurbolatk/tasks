@@ -1,6 +1,9 @@
 $blue: #389bff;
 $red: #eb5945;
+$red-2: #d24431;
 $green: #67c60b;
+$green-2: #0bb961;
+$green-3: #139754;
 $yellow: #f6bb42;
 $violet: #967adc;
 $gray-10: #1f2228;
@@ -15,3 +18,10 @@ $gray-2: #313439;
 $white: #fff;
 
 $color-primary: $blue;
+$color-error: $red-2;
+$color-success: $green-3;
+$color-warning: $yellow;
+
+$border-radius: 3px;
+
+$color-text-dark: $gray-10;

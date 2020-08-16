@@ -9,7 +9,7 @@ $sizes: [0, 0.5, 1, 1.5, 2, 3];
     $size: nth($sizes, $i);
 
     .#{$prefix}-#{$i - 1} {
-      #{$property}: $spacing * $size;
+      #{$property}: $spacing * $size !important;
     }
   }
 }
@@ -18,10 +18,10 @@ $sizes: [0, 0.5, 1, 1.5, 2, 3];
   @for $i from 1 through length($sizes) {
     $size: nth($sizes, $i);
     .#{$prefix}x-#{$i - 1} {
-      margin: 0 $spacing * $size;
+      margin: 0 $spacing * $size !important;
     }
     .#{$prefix}y-#{$i - 1} {
-      margin: $spacing * $size 0;
+      margin: $spacing * $size 0 !important;
     }
   }
 }

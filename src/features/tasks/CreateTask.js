@@ -3,6 +3,7 @@ import { addNewTask } from './tasksSlice'
 import { useDispatch } from 'react-redux'
 import api from '../../api'
 import { useState } from 'react'
+import Alert from '../../components/atoms/Alert'
 
 const initialState = {
   text: '',
@@ -46,7 +47,7 @@ const CreateTask = () => {
     try {
       const { data: newTask } = await api.post('/tasks', task)
       // stop loading
-      setStatus({ message: 'Successfully added!', status: 'succeeded' })
+      setStatus({ message: 'Successfully added', status: 'succeeded' })
       //dispatch an action to redux
       dispatch(addNewTask(newTask))
       //clear fields
@@ -64,8 +65,17 @@ const CreateTask = () => {
   return (
     <div className="card">
       <h3 className="card-title">Create a new task</h3>
-      {failed && <p>{status.message}</p>}
-      {succeeded && <p>{status.message}</p>}
+      {failed && (
+        <Alert variant="error" className="mb-4">
+          {status.message}
+        </Alert>
+      )}
+      {succeeded && (
+        <Alert variant="success" className="mb-4">
+          {status.message}
+        </Alert>
+      )}
+
       <form onSubmit={submitNewTask}>
         <div className="mb-4">
           <label className="form-label" htmlFor="text">
