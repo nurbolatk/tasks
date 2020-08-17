@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom'
 
 const Sidebar = () => {
   return (
-    <div className='sidebar'>
+    <div className="sidebar">
       <nav>
         <p>
-          <Link to='/books'>Books</Link>
+          <Link to="/books">Books</Link>
         </p>
-        <Link to='/tasks'>Tasks</Link>
+        <p>
+          <Link to="/projects">Projects</Link>
+        </p>
+        <Link to="/tasks">Tasks</Link>
       </nav>
     </div>
   )
