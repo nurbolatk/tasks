@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchTasks } from './tasksSlice'
 import { nanoid } from '@reduxjs/toolkit'
+import avatarPlaceholder from '../../assets/avatar-placeholder.svg'
 
 const TaskList = () => {
   const { tasks, status } = useSelector(state => state.tasks)
@@ -14,7 +15,7 @@ const TaskList = () => {
   }, [status, dispatch])
 
   return (
-    <div>
+    <div className="task-list">
       {tasks.map(task => {
         const id = nanoid()
         return (
@@ -32,28 +33,40 @@ const TaskList = () => {
             </div>
             <div className="task-project">
               <button className="task-project-color"></button>
-              <span>Project:</span>
-              <span>Payments</span>
+              <span className="task-project-label">Project:</span>
+              <span className="task-project-text">Payments</span>
             </div>
-            <div className="task-detals">
+            <div className="task-details">
               <div className="task-priority">
-                <button className="task-priority-color"></button>
-                <span>Priority:</span>
+                <button className="task-project-color"></button>
+                <span className="task-project-label">Priority:</span>
                 <span>{task.priority}</span>
               </div>
               <div className="task-deadline">
-                <span>Due:</span>
+                <span className="task-project-label">Due:</span>
                 <span>Today</span>
               </div>
             </div>
             <div className="task-description">{task.description}</div>
             <div className="task-comments">
               <div className="task-comments-list">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Praesentium, hic.
+                <div className="task-comment">
+                  <div className="task-comment-author-avatar">
+                    <img src={avatarPlaceholder} alt="John Doe" />
+                  </div>
+                  <div className="task-comment-author-name">John doe</div>
+                  <p className="task-comment-text">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Praesentium, hic.
+                  </p>
+                </div>
               </div>
               <form className="task-comments-form">
-                <input type="text" />
+                <input
+                  type="text"
+                  className="form-field"
+                  placeholder="Add comment..."
+                />
               </form>
             </div>
           </div>

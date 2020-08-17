@@ -1,3 +1,10 @@
+.task-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(33rem, 1fr));
+  gap: 3.4rem;
+  align-items: start;
+}
+
 .task {
   background-color: $color-bg-secondary;
   border-radius: $border-radius;
@@ -33,5 +40,65 @@
     flex: 1;
   }
 
+  &-project {
+    padding: 1.7rem 3.4rem;
+    display: flex;
+    align-items: center;
+
+    &-color {
+      height: 1.2rem;
+      width: 1.2rem;
+      border: none;
+      background-color: $color-primary;
+      border-radius: $border-radius;
+      margin-right: 1.5rem;
+    }
+
+    &-label {
+      color: $gray-11;
+      margin-right: 1.2rem;
+    }
+  }
+
+  &-details {
+    padding: 1.7rem 3.4rem;
+    display: flex;
+    align-items: center;
+  }
+
+  &-deadline {
+    margin-left: auto;
+  }
+
+  &-description {
+    padding: 1.7rem 3.4rem 3.4rem;
+    color: $gray-3;
+    border-bottom: $line;
+  }
+
+  &-comments {
+    &-list {
+      padding: 3.4rem;
+    }
+    &-form {
+      padding: 0 3.4rem 3.4rem;
+    }
+  }
+
+  &-comment {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 3.4rem;
+    row-gap: 0.6rem;
+
+    &-text {
+      color: $gray-3;
+    }
+    &-author {
+      &-avatar {
+        grid-row: 1 / span 2;
+      }
+    }
+  }
   // checkbox dims: 34px
 }
