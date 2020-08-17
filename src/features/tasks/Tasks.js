@@ -83,6 +83,7 @@ const Tasks = () => {
                 />
               </svg>
               <span className="menu-nav-list-item-text">Active</span>
+              <span className="menu-nav-list-item-badge">8</span>
             </button>
             <button className="menu-nav-list-item">
               <svg
@@ -106,6 +107,7 @@ const Tasks = () => {
                 />
               </svg>
               <span className="menu-nav-list-item-text">Completed</span>
+              <span className="menu-nav-list-item-badge">5</span>
             </button>
           </div>
         </nav>

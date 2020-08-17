@@ -24,6 +24,13 @@
       display: flex;
       align-items: center;
 
+      &-badge {
+        font-size: 1.4rem;
+        display: inline-block;
+        padding: 0.4rem 1.5rem;
+        background-color: rgba($gray-4, 0.6);
+        border-radius: 3rem;
+      }
       &:hover {
         cursor: pointer;
         background-color: rgba($gray-4, 0.05);
