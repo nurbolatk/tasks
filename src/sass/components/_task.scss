@@ -1,0 +1,37 @@
+.task {
+  background-color: $color-bg-secondary;
+  border-radius: $border-radius;
+
+  &-header {
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+  }
+  &-check {
+    width: 3.4rem;
+    height: 3.4rem;
+    background-color: $gray-10;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: $form-check-input-border;
+    appearance: none;
+    color-adjust: exact; // Keep themed appearance for print
+    transition: $form-check-transition;
+    border-radius: $border-radius;
+    cursor: pointer;
+
+    &:checked {
+      background-image: url(../../assets/check-icon.svg);
+      background-color: $color-primary;
+    }
+  }
+
+  &-text {
+    padding-left: 3rem;
+    cursor: pointer;
+    flex: 1;
+  }
+
+  // checkbox dims: 34px
+}
