@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import Modal from '../../components/molecules/Modal'
 
 const TasksMenu = ({ match }) => {
+  const [show, setShow] = useState(false)
   const history = useHistory()
   const goToTaskList = () => {
     history.push('/tasks')
@@ -11,7 +13,8 @@ const TasksMenu = ({ match }) => {
       <div className="p-4">
         <button
           onClick={() => {
-            history.push(`${match.url}/create`)
+            // history.push(`${match.url}/create`)
+            setShow(true)
           }}
           className="btn btn-primary w-100">
           Add task
@@ -173,6 +176,12 @@ const TasksMenu = ({ match }) => {
           </button>
         </div>
       </nav>
+      <Modal show={show} closeModal={() => setShow(false)}>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
+        officia, dolores iste dicta iure in! Assumenda amet fuga exercitationem
+        officia sit aliquid iste quo recusandae laboriosam necessitatibus.
+        Alias, quidem minima?
+      </Modal>
     </div>
   )
 }

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import api from '../../api'
 import { useState } from 'react'
 import Alert from '../../components/atoms/Alert'
+import Modal from '../../components/molecules/Modal'
 
 const initialState = {
   text: '',
@@ -26,6 +27,7 @@ const clearFields = { type: 'CLEAR_FIELDS' }
 
 const CreateTask = () => {
   const [task, setTask] = useReducer(taskReducer, initialState)
+  const [show, setShow] = useState(false)
   const [status, setStatus] = useState({ status: 'idle', message: null })
   const dispatch = useDispatch()
 
@@ -42,19 +44,20 @@ const CreateTask = () => {
 
   const submitNewTask = async e => {
     e.preventDefault()
-    setStatus({ message: null, status: 'loading' })
-    try {
-      const { data: newTask } = await api.post('/tasks', task)
-      // stop loading
-      setStatus({ message: 'Successfully added', status: 'succeeded' })
-      //dispatch an action to redux
-      dispatch(addNewTask(newTask))
-      //clear fields
-      setTask(clearFields)
-    } catch ({ message }) {
-      // stop loading and set error
-      setStatus({ message, status: 'failed' })
-    }
+    setShow(true)
+    // setStatus({ message: null, status: 'loading' })
+    // try {
+    //   const { data: newTask } = await api.post('/tasks', task)
+    //   // stop loading
+    //   setStatus({ message: 'Successfully added', status: 'succeeded' })
+    //   //dispatch an action to redux
+    //   dispatch(addNewTask(newTask))
+    //   //clear fields
+    //   setTask(clearFields)
+    // } catch ({ message }) {
+    //   // stop loading and set error
+    //   setStatus({ message, status: 'failed' })
+    // }
   }
 
   const loading = status.status === 'loading'
@@ -125,6 +128,9 @@ const CreateTask = () => {
           {loading ? 'Saving...' : 'Save'}
         </button>
       </form>
+      <Modal show={show} closeModal={() => setShow(false)}>
+        oooo its what you do to me
+      </Modal>
     </div>
   )
 }

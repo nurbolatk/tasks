@@ -1,10 +1,20 @@
 import React from 'react'
-// import Content from '../molecules/Content'
-// import Menu from '../organisms/Menu'
 import { Switch, Route, useRouteMatch } from 'react-router-dom'
 import CreateTask from './CreateTask'
 import TaskList from './TaskList'
 import TasksMenu from './TasksMenu'
+
+/* task {
+  id
+  text
+  description
+  author
+  project
+  priority
+  deadline
+  completed
+  archived
+}*/
 
 const Tasks = () => {
   const match = useRouteMatch()
