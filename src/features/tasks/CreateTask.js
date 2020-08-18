@@ -12,7 +12,6 @@ const initialState = {
 }
 
 const taskReducer = (state, action) => {
-  console.log(state, initialState)
   switch (action.type) {
     case 'CHANGE_FIELD':
       return { ...state, [action.payload.name]: action.payload.value }

@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react'
+import api from '../../api'
 
 const initialState = {
   name: '',
@@ -25,9 +26,10 @@ const Projects = () => {
     setProject({ type: 'CHANGE_FIELDS', payload: { name, value } })
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
-    console.log(project)
+    const res = await api.post('/projects', project)
+    console.log('Projects -> res', res)
   }
 
   return (
