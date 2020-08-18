@@ -25,9 +25,8 @@ const taskReducer = (state, action) => {
 
 const clearFields = { type: 'CLEAR_FIELDS' }
 
-const CreateTask = () => {
+const CreateTask = ({ show, setShow }) => {
   const [task, setTask] = useReducer(taskReducer, initialState)
-  const [show, setShow] = useState(false)
   const [status, setStatus] = useState({ status: 'idle', message: null })
   const dispatch = useDispatch()
 
@@ -44,20 +43,19 @@ const CreateTask = () => {
 
   const submitNewTask = async e => {
     e.preventDefault()
-    setShow(true)
-    // setStatus({ message: null, status: 'loading' })
-    // try {
-    //   const { data: newTask } = await api.post('/tasks', task)
-    //   // stop loading
-    //   setStatus({ message: 'Successfully added', status: 'succeeded' })
-    //   //dispatch an action to redux
-    //   dispatch(addNewTask(newTask))
-    //   //clear fields
-    //   setTask(clearFields)
-    // } catch ({ message }) {
-    //   // stop loading and set error
-    //   setStatus({ message, status: 'failed' })
-    // }
+    setStatus({ message: null, status: 'loading' })
+    try {
+      const { data: newTask } = await api.post('/tasks', task)
+      // stop loading
+      setStatus({ message: 'Successfully added', status: 'succeeded' })
+      //dispatch an action to redux
+      dispatch(addNewTask(newTask))
+      //clear fields
+      setTask(clearFields)
+    } catch ({ message }) {
+      // stop loading and set error
+      setStatus({ message, status: 'failed' })
+    }
   }
 
   const loading = status.status === 'loading'
@@ -65,8 +63,11 @@ const CreateTask = () => {
   const succeeded = status.status === 'succeeded'
 
   return (
-    <div className="card">
-      <h3 className="card-title">Create a new task</h3>
+    // <Modal show={show} closeModal={() => setShow(false)}>
+    //   <Modal.Header closeModal={() => setShow(false)}>
+    //     Create a new task
+    //   </Modal.Header>
+    <>
       {failed && (
         <Alert variant="error" className="mb-4">
           {status.message}
@@ -77,7 +78,6 @@ const CreateTask = () => {
           {status.message}
         </Alert>
       )}
-
       <form onSubmit={submitNewTask}>
         <div className="mb-4">
           <label className="form-label" htmlFor="text">
@@ -128,10 +128,8 @@ const CreateTask = () => {
           {loading ? 'Saving...' : 'Save'}
         </button>
       </form>
-      <Modal show={show} closeModal={() => setShow(false)}>
-        oooo its what you do to me
-      </Modal>
-    </div>
+    </>
+    // </Modal>
   )
 }
 

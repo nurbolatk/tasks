@@ -24,9 +24,6 @@ const Tasks = () => {
       <TasksMenu match={match} />
       <div className="content">
         <Switch>
-          <Route path={`${match.path}/create`}>
-            <CreateTask />
-          </Route>
           <Route path={match.path}>
             <TaskList />
           </Route>

@@ -1,7 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Modal = ({ show, closeModal, children }) => {
+const Header = ({ closeModal, children }) => {
+  return (
+    <div className="modal-header">
+      <h3>{children}</h3>
+      <button onClick={closeModal}>close</button>
+    </div>
+  )
+}
+
+const Modal = ({ show = false, closeModal, children }) => {
   const handleOutsideClick = e => {
     const isOutside = !e.target.closest('.modal-inner')
     if (isOutside) {
@@ -19,4 +28,5 @@ const Modal = ({ show, closeModal, children }) => {
   )
 }
 
+Modal.Header = Header
 export default Modal
