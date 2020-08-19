@@ -9,12 +9,14 @@ const projectsSlice = createSlice({
   name: 'projects',
   initialState,
   reducers: {
-    selectProject: (state, action) => {
+    chooseCurrentProject: (state, action) => {
       state.current = action.payload.project
     },
   },
 })
 
-export const { selectProject } = projectsSlice.actions
+export const { chooseCurrentProject } = projectsSlice.actions
+
+export const selectCurrentProject = state => state.projects.current
 
 export default projectsSlice.reducer

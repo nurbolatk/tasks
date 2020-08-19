@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchTasks } from './tasksSlice'
-import { nanoid } from '@reduxjs/toolkit'
 import avatarPlaceholder from '../../assets/avatar-placeholder.svg'
 
 const TaskList = () => {
@@ -17,24 +16,25 @@ const TaskList = () => {
   return (
     <div className="task-list">
       {tasks.map(task => {
-        const id = nanoid()
         return (
-          <div className="task">
+          <div className="task" key={`task-${task.id}-completed`}>
             <div className="task-header">
               <input
                 className="task-check"
                 type="checkbox"
                 name="completed"
-                id={`task-${id}-completed`}
+                id={`task-${task.id}-completed`}
               />
-              <label className="task-text" htmlFor={`task-${id}-completed`}>
+              <label
+                className="task-text"
+                htmlFor={`task-${task.id}-completed`}>
                 {task.text}
               </label>
             </div>
             <div className="task-project">
               <button className="task-project-color"></button>
               <span className="task-project-label">Project:</span>
-              <span className="task-project-text">Payments</span>
+              <span className="task-project-text">{task.project.name}</span>
             </div>
             <div className="task-details">
               <div className="task-priority">

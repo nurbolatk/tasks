@@ -1,9 +1,11 @@
 import React, { useReducer } from 'react'
 import { addNewTask } from './tasksSlice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import api from '../../api'
 import { useState } from 'react'
 import Alert from '../../components/atoms/Alert'
+import { nanoid } from '@reduxjs/toolkit'
+import { selectCurrentProject } from '../projects/projectsSlice'
 
 const initialState = {
   text: '',
@@ -27,6 +29,7 @@ const clearFields = { type: 'CLEAR_FIELDS' }
 const CreateTask = ({ show, setShow }) => {
   const [task, setTask] = useReducer(taskReducer, initialState)
   const [status, setStatus] = useState({ status: 'idle', message: null })
+  const project = useSelector(selectCurrentProject)
   const dispatch = useDispatch()
 
   const changeField = e => {
@@ -42,8 +45,11 @@ const CreateTask = ({ show, setShow }) => {
 
   const submitNewTask = async e => {
     e.preventDefault()
+    if (!project.id) return alert('No project selected!')
     setStatus({ message: null, status: 'loading' })
     try {
+      if (!task.id) task.id = nanoid()
+      task.project = project
       const { data: newTask } = await api.post('/tasks', task)
       // stop loading
       setStatus({ message: 'Successfully added', status: 'succeeded' })

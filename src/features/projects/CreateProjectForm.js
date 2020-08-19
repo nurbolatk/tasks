@@ -1,9 +1,10 @@
 import React, { useReducer } from 'react'
 import api from '../../api'
+import { nanoid } from '@reduxjs/toolkit'
 
 const initialState = {
   name: '',
-  color: '#FFAA00',
+  color: '#00Af00',
 }
 
 const reducer = (state, action) => {
@@ -28,6 +29,7 @@ const CreateProjectForm = () => {
 
   const handleSubmit = async e => {
     e.preventDefault()
+    if (!project.id) project.id = nanoid()
     const res = await api.post('/projects', project)
     console.log('Projects -> res', res)
   }
