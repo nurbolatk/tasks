@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux'
 import api from '../../api'
 import { useState } from 'react'
 import Alert from '../../components/atoms/Alert'
-import Modal from '../../components/molecules/Modal'
 
 const initialState = {
   text: '',
@@ -63,10 +62,6 @@ const CreateTask = ({ show, setShow }) => {
   const succeeded = status.status === 'succeeded'
 
   return (
-    // <Modal show={show} closeModal={() => setShow(false)}>
-    //   <Modal.Header closeModal={() => setShow(false)}>
-    //     Create a new task
-    //   </Modal.Header>
     <>
       {failed && (
         <Alert variant="error" className="mb-4">
@@ -150,7 +145,6 @@ const CreateTask = ({ show, setShow }) => {
         </button>
       </form>
     </>
-    // </Modal>
   )
 }
 

@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import CreateTask from './CreateTask'
 import Modal from '../../components/molecules/Modal'
 import CreateProjectForm from '../projects/CreateProjectForm'
 import ProjectsList from '../projects/ProjectsList'
 
-const TasksMenu = ({ match }) => {
+const TasksMenu = () => {
   const [show, setShow] = useState(false)
   const [showProjectModal, setShowProjectModal] = useState(false)
-  const history = useHistory()
-  const goToTaskList = () => {
-    history.push('/tasks')
-  }
+
   return (
     <div className="menu">
       <div className="p-4">

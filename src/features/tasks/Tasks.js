@@ -1,6 +1,4 @@
 import React from 'react'
-import { Switch, Route, useRouteMatch } from 'react-router-dom'
-import CreateTask from './CreateTask'
 import TaskList from './TaskList'
 import TasksMenu from './TasksMenu'
 
@@ -17,17 +15,11 @@ import TasksMenu from './TasksMenu'
 }*/
 
 const Tasks = () => {
-  const match = useRouteMatch()
-
   return (
     <>
-      <TasksMenu match={match} />
+      <TasksMenu />
       <div className="content">
-        <Switch>
-          <Route path={match.path}>
-            <TaskList />
-          </Route>
-        </Switch>
+        <TaskList />
       </div>
     </>
   )
