@@ -1,25 +1,13 @@
 import React, { useState } from 'react'
-import CreateTask from './CreateTask'
 import Modal from '../../components/molecules/Modal'
 import CreateProjectForm from '../projects/CreateProjectForm'
 import ProjectsList from '../projects/ProjectsList'
 
 const TasksMenu = () => {
-  const [show, setShow] = useState(false)
   const [showProjectModal, setShowProjectModal] = useState(false)
 
   return (
     <div className="menu">
-      <div className="p-4">
-        <button
-          onClick={() => {
-            // history.push(`${match.url}/create`)
-            setShow(true)
-          }}
-          className="btn btn-primary w-100">
-          Add task
-        </button>
-      </div>
       <nav className="menu-nav">
         <h4 className="menu-nav-header p-4">
           Projects{' '}
@@ -151,12 +139,6 @@ const TasksMenu = () => {
           </button>
         </div>
       </nav>
-      <Modal show={show} setShow={setShow} closeModal={() => setShow(false)}>
-        <Modal.Header closeModal={() => setShow(false)}>
-          Create a new task
-        </Modal.Header>
-        <CreateTask />
-      </Modal>
       <Modal
         show={showProjectModal}
         setShow={setShowProjectModal}
