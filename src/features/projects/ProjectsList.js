@@ -19,9 +19,11 @@ const ProjectsList = ({ chooseProject }) => {
 
   return (
     <>
-      {projects.map(project => (
+      {projects.map((project, index) => (
         <button
-          className="menu-nav-list-item"
+          className={`menu-nav-list-item ${
+            index === 0 && 'menu-nav-list-item-active'
+          }`}
           key={project.id}
           onClick={chooseProject}>
           <span

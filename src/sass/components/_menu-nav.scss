@@ -49,14 +49,17 @@
       }
       &-text {
         margin-right: auto;
-        color: rgba($gray-4, 1);
+        color: rgba($gray-1, 1);
       }
 
       &-active {
         background-color: rgba($gray-4, 0.05);
+        border-left: 3px solid #fff;
       }
       &-active &-text {
         color: $color-primary;
+        color: $white;
+        font-weight: 600;
       }
 
       &-active &-icon {

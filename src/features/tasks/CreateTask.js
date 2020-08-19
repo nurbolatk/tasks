@@ -9,7 +9,7 @@ import Modal from '../../components/molecules/Modal'
 const initialState = {
   text: '',
   description: '',
-  priority: 'low', // medium | high
+  priority: 'Low', // Medium | High
 }
 
 const taskReducer = (state, action) => {
@@ -107,24 +107,45 @@ const CreateTask = ({ show, setShow }) => {
             onChange={changeField}
           />
         </div>
-        <div className="mb-4">
-          <label className="form-label" htmlFor="priority">
-            Task priority
-          </label>
-
-          <select
-            disabled={loading}
-            name="priority"
-            id="priority"
-            onChange={changeField}
-            value={task.priority}
-            className="form-field">
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
+        <div className="mb-4 grid grid-2">
+          <div>
+            <label className="form-label" htmlFor="priority">
+              Task priority
+            </label>
+            <select
+              disabled={loading}
+              name="priority"
+              id="priority"
+              onChange={changeField}
+              value={task.priority}
+              className="form-field">
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+          <div>
+            <label className="form-label" htmlFor="deadline">
+              Deadline
+            </label>
+            <input
+              type="datetime"
+              name="deadline"
+              id="deadline"
+              className="form-field"
+            />
+          </div>
         </div>
-        <button disabled={loading} className="btn btn-primary">
+        <div className="mb-4">
+          <label htmlFor="tag" className="form-label">
+            Tags
+          </label>
+          <button type="button">dancing</button>
+          <button type="button">tatatara</button>
+          <button type="button">like</button>
+          <button type="button">ifyouknowwhatimean</button>
+        </div>
+        <button type="submit" disabled={loading} className="btn btn-primary">
           {loading ? 'Saving...' : 'Save'}
         </button>
       </form>
