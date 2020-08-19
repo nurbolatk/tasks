@@ -1,40 +1,40 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect } from 'react'
+// import { useDispatch } from 'react-redux'
 import classnames from 'classnames'
-import api from '../../api'
-import { chooseCurrentProject, selectCurrentProject } from './projectsSlice'
+import { useHistory, matchPath } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProjects, selectCurrentProject } from './projectsSlice'
 
 const ProjectsList = () => {
-  const [projects, setProjects] = useState([])
-  const dispatch = useDispatch()
-  const currentProject = useSelector(selectCurrentProject)
+  // const dispatch = useDispatch()
+  const history = useHistory()
+  const projects = useSelector(state => state.projects.projects)
+  const currentProjectId = useSelector(selectCurrentProject)
+  console.log('ProjectsList -> currentProjectId', currentProjectId)
 
   const classes = projectId =>
     classnames([
       'menu-nav-list-item',
       {
-        'menu-nav-list-item-active': currentProject.id === projectId,
+        'menu-nav-list-item-active': currentProjectId === projectId,
       },
     ])
 
   const chooseProject = project => {
-    dispatch(
-      chooseCurrentProject({
-        project,
-      })
-    )
+    // dispatch(
+    //   chooseCurrentProject({
+    //     project,
+    //   })
+    // )
+    if (currentProjectId !== project.id) {
+      history.push(`/tasks/${project.id}`)
+    }
   }
 
+  const dispatch = useDispatch()
   useEffect(() => {
-    api
-      .get('/projects')
-      .then(res => {
-        setProjects(res.data)
-      })
-      .catch(error => {
-        console.log('ProjectsList -> error', error)
-      })
-  })
+    dispatch(fetchProjects())
+  }, [dispatch])
 
   return (
     <>
