@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import CreateTask from './CreateTask'
 import Modal from '../../components/molecules/Modal'
+import CreateProjectForm from '../projects/CreateProjectForm'
+import ProjectsList from '../projects/ProjectsList'
 
 const TasksMenu = ({ match }) => {
   const [show, setShow] = useState(false)
+  const [showProjectModal, setShowProjectModal] = useState(false)
   const history = useHistory()
   const goToTaskList = () => {
     history.push('/tasks')
@@ -22,42 +25,17 @@ const TasksMenu = ({ match }) => {
         </button>
       </div>
       <nav className="menu-nav">
-        <h4 className="menu-nav-header p-4">Layout</h4>
+        <h4 className="menu-nav-header p-4">
+          Projects{' '}
+          <button onClick={() => setShowProjectModal(true)}>add</button>
+        </h4>
         <div className="menu-nav-list">
-          <button
-            className="menu-nav-list-item menu-nav-list-item-active"
-            onClick={goToTaskList}>
-            <svg
-              width="1em"
-              height="1em"
-              viewBox="0 0 16 16"
-              className="bi bi-list-ul menu-nav-list-item-icon"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                fillRule="evenodd"
-                d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"
-              />
-            </svg>
-            <span className="menu-nav-list-item-text">List view</span>
-          </button>
-          <button className="menu-nav-list-item">
-            <svg
-              width="1em"
-              height="1em"
-              viewBox="0 0 16 16"
-              className="bi bi-grid-3x2-gap-fill menu-nav-list-item-icon"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V4zM1 9a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V9zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V9z" />
-            </svg>
-            <span className="menu-nav-list-item-text">Grid view</span>
-          </button>
+          <ProjectsList />
         </div>
       </nav>
       <hr />
       <nav className="menu-nav">
-        <h4 className="menu-nav-header p-4">General</h4>
+        <h4 className="menu-nav-header p-4">Filter</h4>
         <div className="menu-nav-list">
           <button className="menu-nav-list-item ">
             <svg
@@ -182,6 +160,15 @@ const TasksMenu = ({ match }) => {
           Create a new task
         </Modal.Header>
         <CreateTask />
+      </Modal>
+      <Modal
+        show={showProjectModal}
+        setShow={setShowProjectModal}
+        closeModal={() => setShowProjectModal(false)}>
+        <Modal.Header closeModal={() => setShowProjectModal(false)}>
+          Create a new project
+        </Modal.Header>
+        <CreateProjectForm />
       </Modal>
     </div>
   )

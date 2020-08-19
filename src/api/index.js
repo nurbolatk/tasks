@@ -44,13 +44,17 @@ const api = {
       setTimeout(() => {
         switch (endpoint) {
           case '/tasks':
-            resolve({
+            return resolve({
               status: 200,
               data: getAllTasks(),
             })
-            break
+          case '/projects':
+            return resolve({
+              status: 200,
+              data: getAllProjects(),
+            })
           default:
-            reject({
+            return reject({
               status: 404,
               message: `${endpoint} endpoint does not exist`,
             })
@@ -77,4 +81,7 @@ const createProject = project => {
   data.projects = [...data.projects, project]
   updateTasksLocalStorage()
   return data.projects[data.projects.length - 1]
+}
+const getAllProjects = () => {
+  return data.projects
 }

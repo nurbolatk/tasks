@@ -35,11 +35,19 @@
         cursor: pointer;
         background-color: rgba($gray-4, 0.05);
       }
+      &-color {
+        height: 1.2rem;
+        width: 1.2rem;
+        border: none;
+        background-color: $color-primary;
+        border-radius: $border-radius;
+        margin-right: 2rem;
+      }
 
       &-icon {
+        margin-right: 2rem;
       }
       &-text {
-        margin-left: 2rem;
         margin-right: auto;
       }
 
