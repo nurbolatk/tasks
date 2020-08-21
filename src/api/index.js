@@ -94,7 +94,7 @@ const getAllTasks = () => {
   return data.tasks
 }
 const createTask = task => {
-  data.tasks = [...data.tasks, task]
+  data.tasks = [...data.tasks, { ...task, steps: [] }]
   updateTasksLocalStorage()
   return data.tasks[data.tasks.length - 1]
 }

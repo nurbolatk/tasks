@@ -9,6 +9,14 @@
   grid-template-columns: 9rem 28rem 1fr;
 }
 
+.app-right-sidebar-open {
+  grid-template-columns: 9rem 28rem 1fr 52rem;
+
+  .full-task {
+    grid-row: 1 / -1;
+  }
+}
+
 .topbar {
   grid-area: topbar;
   background-color: var(--secondary-bg-color);
@@ -36,7 +44,7 @@
 
 .card {
   background-color: var(--secondary-bg-color);
-  border-radius: 1px solid var(--border-radius);
+  border-radius: var(--border-radius);
   padding: 2.8rem;
   border: 1px solid $gray-10;
 

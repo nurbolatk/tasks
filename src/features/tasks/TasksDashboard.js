@@ -8,6 +8,7 @@ import Modal from '../../components/molecules/Modal'
 import CreateTask from './CreateTask'
 import { fetchTasks, removeTask } from './tasksSlice'
 import api from '../../api'
+import TaskFull from './TaskFull'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
@@ -24,7 +25,9 @@ const TasksDashboard = () => {
     dispatch(fetchTasks())
   }, [dispatch])
 
-  const tasks = useSelector(state => state.tasks.tasks)
+  const tasks = useSelector(state =>
+    state.tasks.tasks.filter(task => task.project.id === projectId)
+  )
 
   const project = useSelector(state =>
     state.projects.projects.find(project => project.id === projectId)

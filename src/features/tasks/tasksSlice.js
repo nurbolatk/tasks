@@ -11,7 +11,23 @@ const initialState = {
   status: 'idle',
   error: null,
 }
-
+/*
+text: "asdf"
+description: "asdf"
+priority: "Low"
+id: "ORrP1poywjgMQ4KoA4m1-"
+project: {
+  name: "Inbox"
+  color: "#00Af00"
+  id: "b7FIyFx9CFtLEuDJpTkhP"
+}
+steps: [
+  {
+    id: ID,
+    text: string,
+  }
+]
+*/
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
   const res = await api.get('/tasks')
   // console.log('fetchTasks -> res', res)

@@ -159,3 +159,37 @@
     }
   }
 }
+
+// full-task
+
+.full-task {
+  background-color: slateblue;
+  box-shadow: -5px 0 10px rgba($color: #000000, $alpha: 0.1);
+  background-color: $color-bg-secondary;
+  border-left: $line;
+  padding: 3rem 4rem;
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-progress {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 2rem;
+    flex: 0 0 70%;
+  }
+
+  &-main-info {
+    padding: 3rem 0;
+    &-text {
+      font-size: 3rem;
+      font-weight: 400;
+      margin-bottom: 2rem;
+    }
+
+    &-details {
+    }
+  }
+}
