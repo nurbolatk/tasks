@@ -5,7 +5,7 @@ import api from '../../api'
 import { useState } from 'react'
 import Alert from '../../components/atoms/Alert'
 import { nanoid } from '@reduxjs/toolkit'
-import { selectCurrentProject } from '../projects/projectsSlice'
+import { selectCurrentProjectData } from '../projects/projectsSlice'
 
 const initialState = {
   text: '',
@@ -26,10 +26,10 @@ const taskReducer = (state, action) => {
 
 const clearFields = { type: 'CLEAR_FIELDS' }
 
-const CreateTask = ({ show, setShow }) => {
+const CreateTask = () => {
   const [task, setTask] = useReducer(taskReducer, initialState)
   const [status, setStatus] = useState({ status: 'idle', message: null })
-  const project = useSelector(selectCurrentProject)
+  const project = useSelector(selectCurrentProjectData)
   const dispatch = useDispatch()
 
   const changeField = e => {

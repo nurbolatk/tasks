@@ -32,5 +32,7 @@ const projectsSlice = createSlice({
 export const { chooseCurrentProject } = projectsSlice.actions
 
 export const selectCurrentProject = state => state.projects.current
+export const selectCurrentProjectData = state =>
+  state.projects.projects.find(project => project.id === state.projects.current)
 
 export default projectsSlice.reducer

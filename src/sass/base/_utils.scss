@@ -3,6 +3,11 @@
 // List of sizes to generate for each
 $spacing: 1rem;
 $sizes: [0, 0.5, 1, 1.5, 2, 3];
+$spacers: ();
+
+@for $i from 1 through length($sizes) {
+  $spacers: map-merge($spacers, ($i - 1: nth($sizes, $i) * $spacing));
+}
 
 @mixin generateSpacing($prefix, $property) {
   @for $i from 1 through length($sizes) {
@@ -55,6 +60,16 @@ $utilities: (
       auto: auto,
     ),
   ),
+  'row-gap': (
+    property: row-gap,
+    class: gx,
+    values: $spacers,
+  ),
+  'column-gap': (
+    property: column-gap,
+    class: gy,
+    values: $spacers,
+  ),
 );
 
 @mixin generate-utility($utility) {
@@ -62,7 +77,6 @@ $utilities: (
     $map: $utility,
     $key: values,
   );
-
   // If the values are a list or string, convert it into a map
   @if type-of($values) == 'string' or type-of(nth($values, 1)) != 'list' {
     $values: zip($values, $values);
@@ -101,4 +115,10 @@ $utilities: (
   }
 }
 
-@include generate-utility(map-get($utilities, 'width'));
+// @include generate-utility(map-get($utilities, 'width'));
+// @include generate-utility(map-get($utilities, 'row-gap'));
+// @include generate-utility(map-get($utilities, 'width'));
+
+@each $key, $value in $utilities {
+  @include generate-utility($value);
+}
