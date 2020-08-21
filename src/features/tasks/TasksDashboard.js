@@ -8,7 +8,7 @@ import Modal from '../../components/molecules/Modal'
 import CreateTask from './CreateTask'
 import { fetchTasks, removeTask } from './tasksSlice'
 import api from '../../api'
-import TaskFull from './TaskFull'
+import { openRightSideBar } from '../app/appSlice'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
@@ -50,6 +50,10 @@ const TasksDashboard = () => {
     }
   }
 
+  const openTaskFull = () => {
+    dispatch(openRightSideBar())
+  }
+
   return (
     <div className="task-dashboard">
       <div className="task-dashboard-header">
@@ -74,7 +78,7 @@ const TasksDashboard = () => {
                 <button
                   data-task-id={task.id}
                   className="task-text mb-1"
-                  onClick={deleteTask}>
+                  onClick={openTaskFull}>
                   {task.text}
                 </button>
                 <p className="task-description text-secondary mb-3 ">

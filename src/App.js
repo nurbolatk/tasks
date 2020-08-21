@@ -1,4 +1,5 @@
 import React from 'react'
+import classnames from 'classnames'
 import './sass/main.scss'
 import Topbar from './components/organisms/Topbar'
 import Sidebar from './components/organisms/Sidebar'
@@ -7,11 +8,17 @@ import Books from './components/pages/Books'
 import Tasks from './features/tasks/Tasks'
 import Projects from './features/projects/Projects'
 import TaskFull from './features/tasks/TaskFull'
+import { useSelector } from 'react-redux'
 
 const App = () => {
+  const rightSideBarOpen = useSelector(state => state.app.rightSideBarOpen)
+
   return (
     <Router>
-      <div className="app app-right-sidebar-open">
+      <div
+        className={classnames('app', {
+          'app-right-sidebar-open': rightSideBarOpen,
+        })}>
         <Topbar />
         <Sidebar />
         <Switch>

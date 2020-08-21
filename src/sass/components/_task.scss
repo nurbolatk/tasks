@@ -168,6 +168,10 @@
   background-color: $color-bg-secondary;
   border-left: $line;
   padding: 3rem 4rem;
+  display: none;
+  &-open {
+    display: block;
+  }
 
   &-header {
     display: flex;
@@ -186,7 +190,6 @@
     &-text {
       font-size: 3rem;
       font-weight: 400;
-      margin-bottom: 2rem;
     }
 
     &-details {

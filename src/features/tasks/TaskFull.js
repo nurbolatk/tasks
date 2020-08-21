@@ -1,4 +1,7 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import classnames from 'classnames'
+import { closeRightSideBar } from '../app/appSlice'
 
 const TaskFull = ({ task }) => {
   task = {
@@ -10,8 +13,17 @@ const TaskFull = ({ task }) => {
     steps: [],
   }
 
+  const rightSideBarOpen = useSelector(state => state.app.rightSideBarOpen)
+  const dispatch = useDispatch()
+  const closeTaskFull = () => {
+    dispatch(closeRightSideBar())
+  }
+
   return (
-    <div className="full-task">
+    <div
+      className={classnames('full-task', {
+        'full-task-open': rightSideBarOpen,
+      })}>
       <div className="full-task-header align-center mb-5">
         <div className="full-task-progress align-center">
           <progress max="100" value="55"></progress>
@@ -21,7 +33,7 @@ const TaskFull = ({ task }) => {
           <span className="task-priority-color-box"></span>
           Completed
         </div> */}
-        <button>close</button>
+        <button onClick={closeTaskFull}>close</button>
       </div>
       <div className="full-task-main-info">
         <h2 className="full-task-main-info-text mb-2">{task.text}</h2>
