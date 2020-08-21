@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useRouteMatch } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import classnames from 'classnames'
 import { chooseCurrentProject } from '../projects/projectsSlice'
 import Modal from '../../components/molecules/Modal'
 import CreateTask from './CreateTask'
@@ -43,9 +44,15 @@ const TasksDashboard = () => {
         <div className="card task-dashboard-board task-dashboard-board-todo">
           <h3 className="card-title m-0">Todo</h3>
           <div className="task-list">
-            {tasks.map(task => (
-              <div className="task py-5">
-                <h4 className="task-text mb-1">{task.text}</h4>
+            {tasks.map((task, index) => (
+              <div
+                // className={classnames('task', {
+                //   'pb-4': index === 0,
+                //   'pt-4': index === tasks.length - 1,
+                //   'py-5': index > 0 && index < tasks.length - 1,
+                // })}>
+                className="task py-5">
+                <button className="task-text mb-1">{task.text}</button>
                 <p className="task-description text-secondary mb-3 ">
                   {task.description}
                 </p>
@@ -63,7 +70,8 @@ const TasksDashboard = () => {
                   <div className="task-priority">
                     <p className="text-tertiary mb-1">Priority:</p>
                     <div className="d-flex align-center">
-                      <span className="task-priority-color-box task-priority-color-box-high"></span>
+                      <span
+                        className={`task-priority-color-box task-priority-color-box-${task.priority.toLowerCase()}`}></span>
                       <span>{task.priority}</span>
                     </div>
                   </div>

@@ -104,6 +104,19 @@
 // }
 
 .task {
+  &-text {
+    background: none;
+    border: none;
+    color: $color-text;
+    font-size: 1.8rem;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $color-primary;
+      cursor: pointer;
+    }
+  }
+
   &-footer {
     display: grid;
     grid-template-columns: 20fr 8fr 9fr;
@@ -136,6 +149,12 @@
 
       &-high {
         background-color: $red;
+      }
+      &-medium {
+        background-color: $yellow;
+      }
+      &-low {
+        background-color: $green;
       }
     }
   }
