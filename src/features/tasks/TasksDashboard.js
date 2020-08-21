@@ -8,7 +8,7 @@ import Modal from '../../components/molecules/Modal'
 import CreateTask from './CreateTask'
 import { fetchTasks, removeTask } from './tasksSlice'
 import api from '../../api'
-import { openRightSideBar } from '../app/appSlice'
+import { toggleRightSideBar } from '../app/appSlice'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
@@ -51,7 +51,7 @@ const TasksDashboard = () => {
   }
 
   const openTaskFull = () => {
-    dispatch(openRightSideBar())
+    dispatch(toggleRightSideBar())
   }
 
   return (
