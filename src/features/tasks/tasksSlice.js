@@ -25,6 +25,9 @@ const tasksSlice = createSlice({
     addNewTask: (state, action) => {
       state.tasks.push(action.payload)
     },
+    removeTask: (state, action) => {
+      state.tasks = state.tasks.filter(task => task.id !== action.payload)
+    },
   },
   extraReducers: {
     [fetchTasks.pending]: (state, action) => {
@@ -41,6 +44,6 @@ const tasksSlice = createSlice({
   },
 })
 
-export const { addNewTask } = tasksSlice.actions
+export const { addNewTask, removeTask } = tasksSlice.actions
 
 export default tasksSlice.reducer

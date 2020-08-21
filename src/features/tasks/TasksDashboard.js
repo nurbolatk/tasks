@@ -6,7 +6,8 @@ import classnames from 'classnames'
 import { chooseCurrentProject } from '../projects/projectsSlice'
 import Modal from '../../components/molecules/Modal'
 import CreateTask from './CreateTask'
-import { fetchTasks } from './tasksSlice'
+import { fetchTasks, removeTask } from './tasksSlice'
+import api from '../../api'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
@@ -32,6 +33,20 @@ const TasksDashboard = () => {
     return <div>Loading...</div>
   }
 
+  const deleteTask = async e => {
+    const { taskId } = e.target.dataset
+    // what is the plan?
+    // call to api to delete the task
+    // receive the id back
+    try {
+      const { data: deletedId } = await api.delete('/tasks', taskId)
+      // remove the task from redux by id
+      dispatch(removeTask(deletedId))
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+
   return (
     <div className="task-dashboard">
       <div className="task-dashboard-header">
@@ -46,13 +61,19 @@ const TasksDashboard = () => {
           <div className="task-list">
             {tasks.map((task, index) => (
               <div
+                key={task.id}
                 // className={classnames('task', {
                 //   'pb-4': index === 0,
                 //   'pt-4': index === tasks.length - 1,
                 //   'py-5': index > 0 && index < tasks.length - 1,
                 // })}>
                 className="task py-5">
-                <button className="task-text mb-1">{task.text}</button>
+                <button
+                  data-task-id={task.id}
+                  className="task-text mb-1"
+                  onClick={deleteTask}>
+                  {task.text}
+                </button>
                 <p className="task-description text-secondary mb-3 ">
                   {task.description}
                 </p>

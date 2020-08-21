@@ -62,18 +62,46 @@ const api = {
       }, timeout)
     })
   },
+  delete: (endpoint, body) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        switch (endpoint) {
+          case '/tasks':
+            return resolve({
+              status: 200,
+              data: deleteTask(body),
+            })
+          // case '/projects':
+          //   return resolve({
+          //     status: 200,
+          //     data: getAllProjects(),
+          //   })
+          default:
+            return reject({
+              status: 404,
+              message: `${endpoint} endpoint does not exist`,
+            })
+        }
+      }, timeout)
+    })
+  },
 }
 
 export default api
 
+// Tasks
+const getAllTasks = () => {
+  return data.tasks
+}
 const createTask = task => {
   data.tasks = [...data.tasks, task]
   updateTasksLocalStorage()
   return data.tasks[data.tasks.length - 1]
 }
-
-const getAllTasks = () => {
-  return data.tasks
+const deleteTask = id => {
+  data.tasks = data.tasks.filter(task => task.id !== id)
+  updateTasksLocalStorage()
+  return id
 }
 
 // Projects
