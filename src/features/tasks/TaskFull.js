@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import classnames from 'classnames'
 import { closeRightSideBar } from '../app/appSlice'
+import api from '../../api'
 
 const TaskFull = ({ task }) => {
   task = {
@@ -13,10 +14,36 @@ const TaskFull = ({ task }) => {
     steps: [],
   }
 
+  const [newStepText, setNewStepText] = useState('')
+
   const rightSideBarOpen = useSelector(state => state.app.rightSideBarOpen)
   const dispatch = useDispatch()
   const closeTaskFull = () => {
     dispatch(closeRightSideBar())
+  }
+
+  const addStep = async e => {
+    e.preventDefault()
+    if (newStepText.length) {
+      // what to do?
+      // we need to push new item to the steps array of the task
+      // variant 1. I would push it to locally and remotely at the same time.
+      // local data will update almost immidiately and show the results in UI
+      // and this will be very responsive. When the api call finishes, if it
+      // was success, do nothing, if it was failure, retract the local updates
+      // and show error message and try again msg
+      // variant 2. I would call backend to update the task and show the loading
+      // status and when backend responds, update the UI
+      try {
+        const res = await api.post('/tasks/:id/steps', {
+          text: newStepText,
+          id: task.id,
+        })
+        console.log(res.data)
+      } catch (error) {
+        alert(error.message)
+      }
+    }
   }
 
   return (
@@ -62,14 +89,19 @@ const TaskFull = ({ task }) => {
       <hr />
       <div className="full-task-steps">
         <p className="menu-nav-header mt-4 mb-2">Steps to complete</p>
-        <form>
+        <form onSubmit={addStep}>
           {task.steps.map(step => {
             return (
               <input type="text" className="form-field" value={step.text} />
             )
           })}
-          <input type="text" className="form-field" />
-          <button className="btn btn-primary ">Add step</button>
+          <input
+            type="text"
+            className="form-field"
+            value={newStepText}
+            onChange={e => setNewStepText(e.target.value)}
+          />
+          <button className="btn btn-primary">Add step</button>
         </form>
       </div>
     </div>

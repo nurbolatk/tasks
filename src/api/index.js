@@ -1,3 +1,5 @@
+import { nanoid } from '@reduxjs/toolkit'
+
 const dataJson = localStorage.getItem('data')
 let data = {
   tasks: [],
@@ -25,6 +27,18 @@ const api = {
               status: 200,
               data: createTask(body),
             })
+          case '/tasks/:id/steps':
+            const res = createStep(body)
+            if (!res)
+              return reject({
+                error: 404,
+                message: 'There is no such task',
+              })
+            return resolve({
+              status: 200,
+              data: res,
+            })
+
           case '/projects':
             return resolve({
               status: 200,
@@ -102,6 +116,17 @@ const deleteTask = id => {
   data.tasks = data.tasks.filter(task => task.id !== id)
   updateTasksLocalStorage()
   return id
+}
+const createStep = ({ text, id }) => {
+  const found = data.tasks.find(task => task.id === id)
+  if (!found) return false
+  const newStep = {
+    id: nanoid(),
+    text,
+    completed: false,
+  }
+  found.steps.push(newStep)
+  return newStep
 }
 
 // Projects
