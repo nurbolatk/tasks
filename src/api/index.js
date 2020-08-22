@@ -125,7 +125,16 @@ const createStep = ({ text, id }) => {
     text,
     completed: false,
   }
-  found.steps.push(newStep)
+  data.tasks = data.tasks.map(task => {
+    if (task.id === id) {
+      return {
+        ...task,
+        steps: [...task.steps, newStep],
+      }
+    }
+    return task
+  })
+  updateTasksLocalStorage()
   return newStep
 }
 

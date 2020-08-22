@@ -10,7 +10,6 @@ const ProjectsList = () => {
   const history = useHistory()
   const projects = useSelector(state => state.projects.projects)
   const currentProjectId = useSelector(selectCurrentProject)
-  console.log('ProjectsList -> currentProjectId', currentProjectId)
 
   const classes = projectId =>
     classnames([

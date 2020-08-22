@@ -8,6 +8,7 @@ import api from '../../api'
 
 const initialState = {
   tasks: [],
+  current: null,
   status: 'idle',
   error: null,
 }
@@ -44,6 +45,19 @@ const tasksSlice = createSlice({
     removeTask: (state, action) => {
       state.tasks = state.tasks.filter(task => task.id !== action.payload)
     },
+    chooseTask: (state, action) => {
+      state.current = state.tasks.find(task => task.id === action.payload)
+    },
+    updateTaskByAddingStep: (state, action) => {
+      if (state.current) {
+        state.current.steps.push(action.payload)
+      } else {
+        console.log(
+          'Error in taskSlice/updateTaskByAddingStep - there is no current task',
+          action.payload
+        )
+      }
+    },
   },
   extraReducers: {
     [fetchTasks.pending]: (state, action) => {
@@ -60,6 +74,11 @@ const tasksSlice = createSlice({
   },
 })
 
-export const { addNewTask, removeTask } = tasksSlice.actions
+export const {
+  addNewTask,
+  removeTask,
+  chooseTask,
+  updateTaskByAddingStep,
+} = tasksSlice.actions
 
 export default tasksSlice.reducer

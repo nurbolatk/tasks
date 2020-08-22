@@ -2,22 +2,20 @@ import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import classnames from 'classnames'
 import { closeRightSideBar } from '../app/appSlice'
+import { updateTaskByAddingStep } from '../tasks/tasksSlice'
 import api from '../../api'
 
-const TaskFull = ({ task }) => {
-  task = {
-    text: 'Ya lublu tebya',
-    description: 'vse blya',
-    priority: 'Low',
-    id: 'UpesmgEEl9cvVsmXWZTnZ',
-    project: { name: 'Inbox', color: '#00Af00', id: 'b7FIyFx9CFtLEuDJpTkhP' },
-    steps: [],
-  }
-
+const TaskFull = () => {
+  const task = useSelector(state => state.tasks.current)
   const [newStepText, setNewStepText] = useState('')
-
   const rightSideBarOpen = useSelector(state => state.app.rightSideBarOpen)
   const dispatch = useDispatch()
+
+  if (!rightSideBarOpen) return null
+  if (rightSideBarOpen && !task) {
+    alert('Attempted to open TaskSideBar')
+    return null
+  }
   const closeTaskFull = () => {
     dispatch(closeRightSideBar())
   }
@@ -39,8 +37,10 @@ const TaskFull = ({ task }) => {
           text: newStepText,
           id: task.id,
         })
-        console.log(res.data)
+        dispatch(updateTaskByAddingStep(res.data))
+        setNewStepText('')
       } catch (error) {
+        console.log('TaskFull -> error', error)
         alert(error.message)
       }
     }
@@ -92,7 +92,12 @@ const TaskFull = ({ task }) => {
         <form onSubmit={addStep}>
           {task.steps.map(step => {
             return (
-              <input type="text" className="form-field" value={step.text} />
+              <input
+                key={step.id}
+                type="text"
+                className="form-field"
+                defaultValue={step.text}
+              />
             )
           })}
           <input
