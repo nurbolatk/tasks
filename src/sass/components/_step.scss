@@ -1,0 +1,28 @@
+.task-step {
+  // background-color: slateblue;
+  margin: 2rem 0;
+  display: flex;
+  align-items: center;
+
+  &-check {
+    width: 1.7rem;
+    height: 1.7rem;
+    background-color: $gray-10;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: $form-check-input-border;
+    appearance: none;
+    color-adjust: exact; // Keep themed appearance for print
+    transition: $form-check-transition;
+    border-radius: $border-radius;
+    cursor: pointer;
+
+    &:checked {
+      background-image: url(../../assets/check-icon.svg);
+      background-color: $color-primary;
+    }
+
+    margin-right: 1rem;
+  }
+}

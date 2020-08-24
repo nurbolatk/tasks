@@ -15,7 +15,7 @@ if (!dataJson) {
   data = JSON.parse(dataJson)
 }
 
-const timeout = 200
+const timeout = 1
 
 const api = {
   post: (endpoint, body) => {

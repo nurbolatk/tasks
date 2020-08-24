@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import { closeRightSideBar } from '../app/appSlice'
 import { updateTaskByAddingStep } from '../tasks/tasksSlice'
 import api from '../../api'
+import Step from './Step'
 
 const TaskFull = () => {
   const task = useSelector(state => state.tasks.current)
@@ -89,17 +90,10 @@ const TaskFull = () => {
       <hr />
       <div className="full-task-steps">
         <p className="menu-nav-header mt-4 mb-2">Steps to complete</p>
+        {task.steps.map(step => {
+          return <Step key={step.id} step={step} />
+        })}
         <form onSubmit={addStep}>
-          {task.steps.map(step => {
-            return (
-              <input
-                key={step.id}
-                type="text"
-                className="form-field"
-                defaultValue={step.text}
-              />
-            )
-          })}
           <input
             type="text"
             className="form-field"
