@@ -19,3 +19,15 @@
     color: var(--text-color);
   }
 }
+
+.btn-icon {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

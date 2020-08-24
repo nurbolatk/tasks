@@ -1,8 +1,17 @@
 .task-step {
   // background-color: slateblue;
-  margin: 2rem 0;
+  padding: 1rem 0;
+  &:first-of-type {
+    padding-top: 0;
+  }
   display: flex;
-  align-items: center;
+  align-items: baseline;
+  position: relative;
+
+  &-label {
+    cursor: pointer;
+    flex: 1;
+  }
 
   &-check {
     width: 1.7rem;
@@ -22,7 +31,68 @@
       background-image: url(../../assets/check-icon.svg);
       background-color: $color-primary;
     }
-
+    transform: translateY(3px);
     margin-right: 1rem;
+  }
+
+  svg {
+    fill: $gray-11;
+  }
+
+  &-drag,
+  &-more {
+    position: absolute;
+    transition: all 0.2s;
+    pointer-events: none;
+    opacity: 0;
+
+    &:hover {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+
+  &-drag {
+    left: 0;
+    transform: translateX(-100%);
+    &:hover {
+      cursor: grab;
+    }
+  }
+
+  &-more {
+    right: 0;
+    transform: translateX(100%);
+  }
+
+  &:hover &-drag,
+  &:hover &-more {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  &-add-form {
+    position: relative;
+    margin-top: 1rem;
+
+    input {
+      padding-right: calc(1rem + 24px + 1rem);
+    }
+
+    button {
+      position: absolute;
+      top: 0;
+      right: 1rem;
+      transform: translateY(50%);
+      // padding-left: 1rem;
+
+      &:hover svg {
+        fill: white;
+      }
+    }
+    svg {
+      fill: $gray-5;
+      transition: fill 0.2s;
+    }
   }
 }

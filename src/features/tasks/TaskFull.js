@@ -5,6 +5,7 @@ import { closeRightSideBar } from '../app/appSlice'
 import { updateTaskByAddingStep } from '../tasks/tasksSlice'
 import api from '../../api'
 import Step from './Step'
+import SendIcon from '../../components/icons/SendIcon'
 
 const TaskFull = () => {
   const task = useSelector(state => state.tasks.current)
@@ -93,14 +94,17 @@ const TaskFull = () => {
         {task.steps.map(step => {
           return <Step key={step.id} step={step} />
         })}
-        <form onSubmit={addStep}>
+        <form onSubmit={addStep} className="task-step-add-form">
           <input
             type="text"
             className="form-field"
             value={newStepText}
+            placeholder="Add new step"
             onChange={e => setNewStepText(e.target.value)}
           />
-          <button className="btn btn-primary">Add step</button>
+          <button className="btn-icon">
+            <SendIcon />
+          </button>
         </form>
       </div>
     </div>
