@@ -6,13 +6,15 @@ import { chooseCurrentProject } from '../projects/projectsSlice'
 import Modal from '../../components/molecules/Modal'
 import CreateTask from './CreateTask'
 import { fetchTasks, chooseTask } from './tasksSlice'
-import { toggleRightSideBar } from '../app/appSlice'
+import { closeRightSideBar, openRightSideBar } from '../app/appSlice'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
   const { projectId } = match.params
   const dispatch = useDispatch()
   const [show, setShow] = useState(false)
+  const currentTask = useSelector(state => state.tasks.current)
+  const rightSideBarOpen = useSelector(state => state.app.rightSideBarOpen)
 
   useEffect(() => {
     dispatch(chooseCurrentProject(projectId))
@@ -49,8 +51,20 @@ const TasksDashboard = () => {
 
   const openTaskFull = e => {
     const { taskId } = e.target.dataset
-    dispatch(toggleRightSideBar())
-    dispatch(chooseTask(taskId))
+    if (!rightSideBarOpen) {
+      dispatch(openRightSideBar())
+      dispatch(chooseTask(taskId))
+    } else {
+      if (currentTask) {
+        if (taskId === currentTask.id) {
+          dispatch(closeRightSideBar())
+        } else {
+          dispatch(chooseTask(taskId))
+        }
+      } else {
+        console.log('Right side bar is open but currentTask is null :-0')
+      }
+    }
   }
 
   return (

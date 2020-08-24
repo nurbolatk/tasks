@@ -33,7 +33,7 @@ const App = () => {
           </Route>
         </Switch>
 
-        <TaskFull />
+        {rightSideBarOpen && <TaskFull />}
       </div>
     </Router>
   )

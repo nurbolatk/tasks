@@ -13,9 +13,12 @@ const TaskFull = () => {
   const rightSideBarOpen = useSelector(state => state.app.rightSideBarOpen)
   const dispatch = useDispatch()
 
-  if (!rightSideBarOpen) return null
+  if (!rightSideBarOpen) {
+    console.log('Taskfull opened when it was not supposed to')
+    return null
+  }
   if (rightSideBarOpen && !task) {
-    alert('Attempted to open TaskSideBar')
+    alert('Attempted to open TaskSideBar without the task')
     return null
   }
   const closeTaskFull = () => {
