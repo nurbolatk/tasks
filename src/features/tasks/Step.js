@@ -1,12 +1,16 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { toggleStep } from './tasksSlice'
 import DragIcon from '../../components/icons/DragIcon'
 import MoreHorizontalIcon from '../../components/icons/MoreHorizontalIcon'
 
 const Step = ({ step }) => {
+  const dispatch = useDispatch()
   const handleCompleteStep = e => {
     // update redux
     // send request to api
     // if request failed, revert changes
+    dispatch(toggleStep(step.id))
     console.log('aa')
   }
   return (

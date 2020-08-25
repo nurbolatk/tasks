@@ -58,6 +58,22 @@ const tasksSlice = createSlice({
         )
       }
     },
+    toggleStep: (state, action) => {
+      if (state.current) {
+        const step = state.current.steps.find(
+          step => step.id === action.payload
+        )
+        if (step) {
+          step.completed = !step.completed
+        }
+      } else {
+        console.warn(
+          'Attempted to toggle step of undefined current task',
+          state,
+          action
+        )
+      }
+    },
   },
   extraReducers: {
     [fetchTasks.pending]: (state, action) => {
@@ -79,6 +95,7 @@ export const {
   removeTask,
   chooseTask,
   updateTaskByAddingStep,
+  toggleStep,
 } = tasksSlice.actions
 
 export default tasksSlice.reducer
