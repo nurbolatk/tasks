@@ -54,7 +54,7 @@ const TasksDashboard = () => {
         completedSteps++
       }
     })
-    console.log(task.text, completedSteps)
+
     switch (completedSteps) {
       case 0:
         tasksTodo.push(task)
@@ -97,7 +97,7 @@ const TasksDashboard = () => {
 
   return (
     <div className="task-dashboard">
-      <div className="task-dashboard-header">
+      <div className="task-dashboard-header d-flex justify-between">
         <h2 className="task-dashboard-header-name">{project.name}</h2>
         <button onClick={() => setShow(true)} className="btn btn-primary">
           Add task

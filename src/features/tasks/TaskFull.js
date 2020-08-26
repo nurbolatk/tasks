@@ -95,7 +95,7 @@ const TaskFull = () => {
       <div className="full-task-steps">
         <p className="menu-nav-header mt-4 mb-2">Steps to complete</p>
         {task.steps.map(step => {
-          return <Step key={step.id} step={step} />
+          return <Step key={step.id} step={step} taskId={task.id} />
         })}
         <form onSubmit={addStep} className="task-step-add-form">
           <input

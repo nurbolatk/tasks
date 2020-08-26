@@ -76,6 +76,33 @@ const api = {
       }, timeout)
     })
   },
+  put: (endpoint, body) => {
+    // console.log(`%cNew put request ${endpoint}`, 'color:blue', body)
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        switch (endpoint) {
+          case '/tasks/id/steps/id':
+            const res = updateStep(body)
+            if (res.taskExists && res.stepExists) {
+              return resolve({
+                status: 200,
+                data: res,
+              })
+            } else {
+              return reject({
+                status: 404,
+                message: `There is no such step and/or task in database`,
+              })
+            }
+          default:
+            return reject({
+              status: 404,
+              message: `${endpoint} endpoint does not exist`,
+            })
+        }
+      }, timeout)
+    })
+  },
   delete: (endpoint, body) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -136,6 +163,34 @@ const createStep = ({ text, id }) => {
   })
   updateTasksLocalStorage()
   return newStep
+}
+
+const updateStep = ({ taskId, updatedStep }) => {
+  let taskExists = false
+  let stepExists = false
+  data.tasks = data.tasks.map(task => {
+    if (task.id === taskId) {
+      taskExists = true
+      return {
+        ...task,
+        steps: task.steps.map(step => {
+          if (step.id === updatedStep.id) {
+            stepExists = true
+            return updatedStep
+          }
+          return step
+        }),
+      }
+    }
+    return task
+  })
+  if (taskExists && stepExists) {
+    updateTasksLocalStorage()
+  }
+  return {
+    taskExists,
+    stepExists,
+  }
 }
 
 // Projects
