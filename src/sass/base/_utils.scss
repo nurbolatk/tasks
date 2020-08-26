@@ -70,6 +70,40 @@ $utilities: (
     class: gy,
     values: $spacers,
   ),
+  'margin-top': (
+    property: margin-top,
+    class: 'mt',
+    values: // map-merge(
+    //     $spacers,
+    //     (
+    //       auto: auto,
+    //     )
+    //   )
+    (
+        auto: auto,
+      ),
+  ),
+  'margin-left': (
+    property: margin-left,
+    class: 'ml',
+    values: (
+      auto: auto,
+    ),
+  ),
+  'margin-right': (
+    property: margin-right,
+    class: 'mr',
+    values: (
+      auto: auto,
+    ),
+  ),
+  'margin-bottom': (
+    property: margin-bottom,
+    class: 'mb',
+    values: (
+      auto: auto,
+    ),
+  ),
 );
 
 @mixin generate-utility($utility) {

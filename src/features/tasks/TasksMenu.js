@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Modal from '../../components/molecules/Modal'
 import CreateProjectForm from '../projects/CreateProjectForm'
 import ProjectsList from '../projects/ProjectsList'
+import AddIcon from '../../components/icons/AddIcon'
 
 const TasksMenu = () => {
   const [showProjectModal, setShowProjectModal] = useState(false)
@@ -9,9 +10,13 @@ const TasksMenu = () => {
   return (
     <div className="menu">
       <nav className="menu-nav">
-        <h4 className="menu-nav-header p-4">
-          Projects{' '}
-          <button onClick={() => setShowProjectModal(true)}>add</button>
+        <h4 className="menu-nav-header p-4 d-flex align-center">
+          Projects
+          <button
+            onClick={() => setShowProjectModal(true)}
+            className="btn-icon btn-icon-fill-light ml-2">
+            <AddIcon />
+          </button>
         </h4>
         <div className="menu-nav-list">
           <ProjectsList />

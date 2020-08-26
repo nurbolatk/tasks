@@ -15,6 +15,7 @@ import {
 // import BoardDoing from './BoardDoing'
 // import BoardDone from './BoardDone'
 import BoardTemplate from './BoardTemplate'
+import SettingsIcon from '../../components/icons/SettingsIcon'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
@@ -67,20 +68,6 @@ const TasksDashboard = () => {
     }
   })
 
-  // const deleteTask = async e => {
-  //   const { taskId } = e.target.dataset
-  //   // what is the plan?
-  //   // call to api to delete the task
-  //   // receive the id back
-  //   try {
-  //     const { data: deletedId } = await api.delete('/tasks', taskId)
-  //     // remove the task from redux by id
-  //     dispatch(removeTask(deletedId))
-  //   } catch (error) {
-  //     alert(error.message)
-  //   }
-  // }
-
   const openTaskSideBar = e => {
     const { taskId } = e.target.dataset
     if (!currentTask) {
@@ -97,8 +84,11 @@ const TasksDashboard = () => {
 
   return (
     <div className="task-dashboard">
-      <div className="task-dashboard-header d-flex justify-between">
+      <div className="task-dashboard-header d-flex">
         <h2 className="task-dashboard-header-name">{project.name}</h2>
+        <button className="btn-icon btn-icon-fill-dark ml-2">
+          <SettingsIcon />
+        </button>
         <button onClick={() => setShow(true)} className="btn btn-primary">
           Add task
         </button>

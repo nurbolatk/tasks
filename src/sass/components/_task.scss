@@ -176,7 +176,7 @@
 
   &-header {
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
   }
 
   &-progress {
@@ -202,7 +202,10 @@
 .task-dashboard {
   &-header {
     align-items: center;
-    justify-content: space-between;
+    // justify-content: space-between;
+    .btn-icon {
+      margin-right: auto;
+    }
   }
   &-body {
     align-items: flex-start;

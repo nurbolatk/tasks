@@ -30,4 +30,25 @@
   &:hover {
     cursor: pointer;
   }
+
+  &-fill-dark {
+    svg {
+      fill: $gray-11;
+      transition: fill 0.2s;
+    }
+
+    &:hover svg {
+      fill: $gray-1;
+    }
+  }
+  &-fill-light {
+    svg {
+      fill: $gray-1;
+      transition: fill 0.2s;
+    }
+
+    &:hover svg {
+      fill: $color-primary;
+    }
+  }
 }

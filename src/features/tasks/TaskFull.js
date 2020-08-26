@@ -5,10 +5,13 @@ import {
   updateTaskByAddingStep,
   selectCurrentTask,
   resetCurrentTask,
+  removeTask,
 } from '../tasks/tasksSlice'
 import api from '../../api'
 import Step from './Step'
 import SendIcon from '../../components/icons/SendIcon'
+import CloseIcon from '../../components/icons/CloseIcon'
+import DeleteIcon from '../../components/icons/DeleteIcon'
 
 const TaskFull = () => {
   const task = useSelector(selectCurrentTask)
@@ -26,7 +29,21 @@ const TaskFull = () => {
   )
   const progress = Math.round((numCompleted / task.steps.length) * 100)
 
-  const closeTaskFull = () => {
+  const deleteTask = async e => {
+    // what is the plan?
+    // call to api to delete the task
+    // receive the id back
+    try {
+      const { data: deletedId } = await api.delete('/tasks', task.id)
+      // remove the task from redux by id
+      dispatch(resetCurrentTask())
+      dispatch(removeTask(deletedId))
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+
+  const closeTaskSideBar = () => {
     // dispatch an action that sets currentTask to null
     dispatch(resetCurrentTask())
   }
@@ -63,7 +80,7 @@ const TaskFull = () => {
         'full-task-open': task,
       })}>
       <div className="full-task-header align-center mb-5">
-        <div className="full-task-progress align-center">
+        <div className="full-task-progress align-center mr-auto">
           <progress max="100" value={progress}></progress>
           <span>{progress}% completed</span>
         </div>
@@ -71,7 +88,16 @@ const TaskFull = () => {
           <span className="task-priority-color-box"></span>
           Completed
         </div> */}
-        <button onClick={closeTaskFull}>close</button>
+        <button
+          className="btn-icon btn-icon-fill-dark mr-2"
+          onClick={deleteTask}>
+          <DeleteIcon />
+        </button>
+        <button
+          onClick={closeTaskSideBar}
+          className="btn-icon btn-icon-fill-dark">
+          <CloseIcon />
+        </button>
       </div>
       <div className="full-task-main-info">
         <h2 className="full-task-main-info-text mb-2">{task.text}</h2>

@@ -1,11 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import CloseIcon from '../icons/CloseIcon'
 
 const Header = ({ closeModal, children }) => {
   return (
     <div className="modal-header">
       <h3>{children}</h3>
-      <button onClick={closeModal}>close</button>
+      <button onClick={closeModal} className="btn-icon btn-icon-fill-dark">
+        <CloseIcon />
+      </button>
     </div>
   )
 }
