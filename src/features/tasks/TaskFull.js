@@ -34,7 +34,7 @@ const TaskFull = () => {
     // call to api to delete the task
     // receive the id back
     try {
-      const { data: deletedId } = await api.delete('/tasks', task.id)
+      const { data: deletedId } = await api.delete('/tasks/id', task.id)
       // remove the task from redux by id
       dispatch(resetCurrentTask())
       dispatch(removeTask(deletedId))

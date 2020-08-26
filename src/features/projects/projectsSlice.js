@@ -25,9 +25,15 @@ const projectsSlice = createSlice({
       state.projects = state.projects.filter(project =>
         project.id === action.payload.id ? false : true
       )
+
       if (state.current === action.payload.id) {
-        state.current = state.projects[0].id || null
-        action.payload.history.replace(`/tasks/${state.current}`)
+        if (state.projects[0]) {
+          state.current = state.projects[0].id
+          action.payload.history.replace(`/tasks/${state.current}`)
+        } else {
+          state.current = null
+          action.payload.history.replace(`/tasks`)
+        }
       }
     },
   },

@@ -16,6 +16,7 @@ import {
 // import BoardDone from './BoardDone'
 import BoardTemplate from './BoardTemplate'
 import SettingsIcon from '../../components/icons/SettingsIcon'
+import api from '../../api'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
@@ -84,8 +85,14 @@ const TasksDashboard = () => {
     }
   }
 
-  const onDeleteProjectClicked = () => {
-    dispatch(deleteProject({ id: projectId, history }))
+  const onDeleteProjectClicked = async () => {
+    try {
+      await api.delete('/projects/id', projectId)
+      dispatch(deleteProject({ id: projectId, history }))
+    } catch (error) {
+      console.error(error.message)
+      alert(error.message)
+    }
   }
 
   return (

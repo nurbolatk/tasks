@@ -106,20 +106,20 @@ const api = {
     })
   },
   delete: (endpoint, body) => {
-    console.log(`%cNew post request ${endpoint}`, 'color:blue', body)
+    console.log(`%cNew delete request ${endpoint}`, 'color:blue', body)
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         switch (endpoint) {
-          case '/tasks':
+          case '/tasks/id':
             return resolve({
               status: 200,
               data: deleteTask(body),
             })
-          // case '/projects':
-          //   return resolve({
-          //     status: 200,
-          //     data: getAllProjects(),
-          //   })
+          case '/projects/id':
+            return resolve({
+              status: 200,
+              data: deleteProject(body),
+            })
           default:
             return reject({
               status: 404,
@@ -204,4 +204,9 @@ const createProject = project => {
 }
 const getAllProjects = () => {
   return data.projects
+}
+const deleteProject = id => {
+  data.projects = data.projects.filter(project => project.id !== id)
+  updateTasksLocalStorage()
+  return id
 }
