@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { useRouteMatch } from 'react-router-dom'
+import { useRouteMatch, useHistory } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { chooseCurrentProject } from '../projects/projectsSlice'
+import { setCurrentProject, deleteProject } from '../projects/projectsSlice'
 import Modal from '../../components/molecules/Modal'
 import CreateTask from './CreateTask'
 import {
@@ -29,8 +29,10 @@ const TasksDashboard = () => {
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(chooseCurrentProject(projectId))
+    dispatch(setCurrentProject(projectId))
   }, [projectId, dispatch])
+
+  const history = useHistory()
 
   const tasks = useSelector(state =>
     state.tasks.tasks.filter(task => task.project.id === projectId)
@@ -82,11 +84,17 @@ const TasksDashboard = () => {
     }
   }
 
+  const onDeleteProjectClicked = () => {
+    dispatch(deleteProject({ id: projectId, history }))
+  }
+
   return (
     <div className="task-dashboard">
       <div className="task-dashboard-header d-flex">
         <h2 className="task-dashboard-header-name">{project.name}</h2>
-        <button className="btn-icon btn-icon-fill-dark ml-2">
+        <button
+          className="btn-icon btn-icon-fill-dark ml-2"
+          onClick={onDeleteProjectClicked}>
           <SettingsIcon />
         </button>
         <button onClick={() => setShow(true)} className="btn btn-primary">

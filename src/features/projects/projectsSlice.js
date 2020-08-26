@@ -18,8 +18,17 @@ const projectsSlice = createSlice({
   name: 'projects',
   initialState,
   reducers: {
-    chooseCurrentProject: (state, action) => {
+    setCurrentProject: (state, action) => {
       state.current = action.payload
+    },
+    deleteProject: (state, action) => {
+      state.projects = state.projects.filter(project =>
+        project.id === action.payload.id ? false : true
+      )
+      if (state.current === action.payload.id) {
+        state.current = state.projects[0].id || null
+        action.payload.history.replace(`/tasks/${state.current}`)
+      }
     },
   },
   extraReducers: {
@@ -29,7 +38,7 @@ const projectsSlice = createSlice({
   },
 })
 
-export const { chooseCurrentProject } = projectsSlice.actions
+export const { setCurrentProject, deleteProject } = projectsSlice.actions
 
 export const selectCurrentProject = state => state.projects.current
 export const selectCurrentProjectData = state =>
