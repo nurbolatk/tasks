@@ -7,24 +7,22 @@ import api from '../../api'
 
 const Step = ({ step, taskId }) => {
   const dispatch = useDispatch()
-  const handleCompleteStep = e => {
+  const handleCompleteStep = async () => {
     // update redux
     // send request to api
     // if request failed, revert changes
     dispatch(toggleStep(step.id))
-    api
-      .put('/tasks/id/steps/id', {
+    try {
+      await api.put('/tasks/id/steps/id', {
         taskId,
         updatedStep: { ...step, completed: !step.completed },
       })
-      .then(res => {
-        console.log(res.data)
-      })
-      .catch(error => {
-        console.error(error.message)
-        dispatch(toggleStep(step.id))
-      })
+    } catch (error) {
+      console.error(error.message)
+      dispatch(toggleStep(step.id))
+    }
   }
+
   return (
     <div className="task-step">
       <button className="btn-icon task-step-drag">

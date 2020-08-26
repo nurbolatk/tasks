@@ -1,6 +1,11 @@
 import React from 'react'
 
 const Task = ({ task, onTitleClick }) => {
+  const numCompleted = task.steps.reduce(
+    (count, step) => (step.completed ? count + 1 : count),
+    0
+  )
+  const progress = Math.round((numCompleted / task.steps.length) * 100)
   return (
     <div className="task py-5">
       <button
@@ -18,8 +23,8 @@ const Task = ({ task, onTitleClick }) => {
           <progress
             className="task-progress-bar"
             max="100"
-            value="70"></progress>
-          <span className="task-progress-value">0%</span>
+            value={progress}></progress>
+          <span className="task-progress-value">{progress}%</span>
         </div>
         <div className="task-priority">
           <p className="text-tertiary mb-1">Priority:</p>

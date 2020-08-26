@@ -20,6 +20,12 @@ const TaskFull = () => {
     return null
   }
 
+  const numCompleted = task.steps.reduce(
+    (count, step) => (step.completed ? count + 1 : count),
+    0
+  )
+  const progress = Math.round((numCompleted / task.steps.length) * 100)
+
   const closeTaskFull = () => {
     // dispatch an action that sets currentTask to null
     dispatch(resetCurrentTask())
@@ -58,8 +64,8 @@ const TaskFull = () => {
       })}>
       <div className="full-task-header align-center mb-5">
         <div className="full-task-progress align-center">
-          <progress max="100" value="55"></progress>
-          <span>55% completed</span>
+          <progress max="100" value={progress}></progress>
+          <span>{progress}% completed</span>
         </div>
         {/* <div className="full-task-completed">
           <span className="task-priority-color-box"></span>

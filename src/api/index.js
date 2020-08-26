@@ -19,6 +19,7 @@ const timeout = 1
 
 const api = {
   post: (endpoint, body) => {
+    console.log(`%cNew post request ${endpoint}`, 'color:blue', body)
     return new Promise((resolve, reject) =>
       setTimeout(() => {
         switch (endpoint) {
@@ -54,6 +55,7 @@ const api = {
     )
   },
   get: endpoint => {
+    console.log(`%cNew get request ${endpoint}`, 'color:blue')
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         switch (endpoint) {
@@ -77,7 +79,7 @@ const api = {
     })
   },
   put: (endpoint, body) => {
-    // console.log(`%cNew put request ${endpoint}`, 'color:blue', body)
+    console.log(`%cNew put request ${endpoint}`, 'color:blue', body)
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         switch (endpoint) {
@@ -104,6 +106,7 @@ const api = {
     })
   },
   delete: (endpoint, body) => {
+    console.log(`%cNew post request ${endpoint}`, 'color:blue', body)
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         switch (endpoint) {
