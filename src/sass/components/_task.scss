@@ -197,3 +197,14 @@
     }
   }
 }
+
+// dashboard
+.task-dashboard {
+  &-header {
+    align-items: center;
+    justify-content: space-between;
+  }
+  &-body {
+    align-items: flex-start;
+  }
+}

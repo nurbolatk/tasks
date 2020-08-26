@@ -5,24 +5,31 @@ import { useDispatch, useSelector } from 'react-redux'
 import { chooseCurrentProject } from '../projects/projectsSlice'
 import Modal from '../../components/molecules/Modal'
 import CreateTask from './CreateTask'
-import { fetchTasks, chooseTask } from './tasksSlice'
-import { closeRightSideBar, openRightSideBar } from '../app/appSlice'
+import {
+  fetchTasks,
+  setCurrentTask,
+  selectCurrentTask,
+  resetCurrentTask,
+} from './tasksSlice'
+// import BoardTodo from './BoardTodo'
+// import BoardDoing from './BoardDoing'
+// import BoardDone from './BoardDone'
+import BoardTemplate from './BoardTemplate'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
   const { projectId } = match.params
   const dispatch = useDispatch()
   const [show, setShow] = useState(false)
-  const currentTask = useSelector(state => state.tasks.current)
-  const rightSideBarOpen = useSelector(state => state.app.rightSideBarOpen)
-
-  useEffect(() => {
-    dispatch(chooseCurrentProject(projectId))
-  }, [projectId, dispatch])
+  const currentTask = useSelector(selectCurrentTask)
 
   useEffect(() => {
     dispatch(fetchTasks())
   }, [dispatch])
+
+  useEffect(() => {
+    dispatch(chooseCurrentProject(projectId))
+  }, [projectId, dispatch])
 
   const tasks = useSelector(state =>
     state.tasks.tasks.filter(task => task.project.id === projectId)
@@ -31,9 +38,34 @@ const TasksDashboard = () => {
   const project = useSelector(state =>
     state.projects.projects.find(project => project.id === projectId)
   )
+
   if (!project) {
     return <div>Loading...</div>
   }
+
+  const tasksTodo = []
+  const tasksDoing = []
+  const tasksDone = []
+
+  tasks.forEach(task => {
+    let completedSteps = 0
+    task.steps.forEach(step => {
+      if (step.completed) {
+        completedSteps++
+      }
+    })
+
+    switch (completedSteps) {
+      case 0:
+        tasksTodo.push(task)
+        break
+      case task.steps.length:
+        tasksDone.push(task)
+        break
+      default:
+        tasksDoing.push(task)
+    }
+  })
 
   // const deleteTask = async e => {
   //   const { taskId } = e.target.dataset
@@ -49,180 +81,44 @@ const TasksDashboard = () => {
   //   }
   // }
 
-  const openTaskFull = e => {
+  const openTaskSideBar = e => {
     const { taskId } = e.target.dataset
-    if (!rightSideBarOpen) {
-      dispatch(openRightSideBar())
-      dispatch(chooseTask(taskId))
+    if (!currentTask) {
+      dispatch(setCurrentTask(taskId))
     } else {
-      if (currentTask) {
-        if (taskId === currentTask.id) {
-          dispatch(closeRightSideBar())
-        } else {
-          dispatch(chooseTask(taskId))
-        }
+      if (taskId === currentTask.id) {
+        // dispatch an action that sets currentTask to null
+        dispatch(resetCurrentTask())
       } else {
-        console.log('Right side bar is open but currentTask is null :-0')
+        dispatch(setCurrentTask(taskId))
       }
     }
   }
 
   return (
     <div className="task-dashboard">
-      <div className="task-dashboard-header">
+      <div className="task-dashboard-header d-flex justify-between">
         <h2 className="task-dashboard-header-name">{project.name}</h2>
         <button onClick={() => setShow(true)} className="btn btn-primary">
           Add task
         </button>
       </div>
       <div className="grid grid-3 my-5 task-dashboard-body ">
-        <div className="card task-dashboard-board task-dashboard-board-todo">
-          <h3 className="card-title m-0">Todo</h3>
-          <div className="task-list">
-            {tasks.map((task, index) => (
-              <div
-                key={task.id}
-                // className={classnames('task', {
-                //   'pb-4': index === 0,
-                //   'pt-4': index === tasks.length - 1,
-                //   'py-5': index > 0 && index < tasks.length - 1,
-                // })}>
-                className="task py-5">
-                <button
-                  data-task-id={task.id}
-                  className="task-text mb-1"
-                  onClick={openTaskFull}>
-                  {task.text}
-                </button>
-                <p className="task-description text-secondary mb-3 ">
-                  {task.description}
-                </p>
-                <div className="task-footer">
-                  <div className="gx-1  task-progress">
-                    <p className="task-progress-label text-tertiary">
-                      Progress
-                    </p>
-                    <progress
-                      className="task-progress-bar"
-                      max="100"
-                      value="70"></progress>
-                    <span className="task-progress-value">0%</span>
-                  </div>
-                  <div className="task-priority">
-                    <p className="text-tertiary mb-1">Priority:</p>
-                    <div className="d-flex align-center">
-                      <span
-                        className={`task-priority-color-box task-priority-color-box-${task.priority.toLowerCase()}`}></span>
-                      <span>{task.priority}</span>
-                    </div>
-                  </div>
-                  <div className=" task-deadline">
-                    <p className="text-tertiary mb-1">Due:</p>
-                    <span>Today</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="card task-board task-board-doing">
-          <h3 className="card-title m-0">Doing</h3>
-          <div className="task-list">
-            {tasks.map((task, index) => (
-              <div
-                key={task.id}
-                // className={classnames('task', {
-                //   'pb-4': index === 0,
-                //   'pt-4': index === tasks.length - 1,
-                //   'py-5': index > 0 && index < tasks.length - 1,
-                // })}>
-                className="task py-5">
-                <button
-                  data-task-id={task.id}
-                  className="task-text mb-1"
-                  onClick={openTaskFull}>
-                  {task.text}
-                </button>
-                <p className="task-description text-secondary mb-3 ">
-                  {task.description}
-                </p>
-                <div className="task-footer">
-                  <div className="gx-1  task-progress">
-                    <p className="task-progress-label text-tertiary">
-                      Progress
-                    </p>
-                    <progress
-                      className="task-progress-bar"
-                      max="100"
-                      value="70"></progress>
-                    <span className="task-progress-value">0%</span>
-                  </div>
-                  <div className="task-priority">
-                    <p className="text-tertiary mb-1">Priority:</p>
-                    <div className="d-flex align-center">
-                      <span
-                        className={`task-priority-color-box task-priority-color-box-${task.priority.toLowerCase()}`}></span>
-                      <span>{task.priority}</span>
-                    </div>
-                  </div>
-                  <div className=" task-deadline">
-                    <p className="text-tertiary mb-1">Due:</p>
-                    <span>Today</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="card task-board task-board-done">
-          <h3 className="card-title m-0">Done</h3>
-          <div className="task-list">
-            {tasks.map((task, index) => (
-              <div
-                key={task.id}
-                // className={classnames('task', {
-                //   'pb-4': index === 0,
-                //   'pt-4': index === tasks.length - 1,
-                //   'py-5': index > 0 && index < tasks.length - 1,
-                // })}>
-                className="task py-5">
-                <button
-                  data-task-id={task.id}
-                  className="task-text mb-1"
-                  onClick={openTaskFull}>
-                  {task.text}
-                </button>
-                <p className="task-description text-secondary mb-3 ">
-                  {task.description}
-                </p>
-                <div className="task-footer">
-                  <div className="gx-1  task-progress">
-                    <p className="task-progress-label text-tertiary">
-                      Progress
-                    </p>
-                    <progress
-                      className="task-progress-bar"
-                      max="100"
-                      value="70"></progress>
-                    <span className="task-progress-value">0%</span>
-                  </div>
-                  <div className="task-priority">
-                    <p className="text-tertiary mb-1">Priority:</p>
-                    <div className="d-flex align-center">
-                      <span
-                        className={`task-priority-color-box task-priority-color-box-${task.priority.toLowerCase()}`}></span>
-                      <span>{task.priority}</span>
-                    </div>
-                  </div>
-                  <div className=" task-deadline">
-                    <p className="text-tertiary mb-1">Due:</p>
-                    <span>Today</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <BoardTemplate
+          tasks={tasksTodo}
+          title="Todo"
+          onTaskTitleClicked={openTaskSideBar}
+        />
+        <BoardTemplate
+          tasks={tasksDoing}
+          title="Doing"
+          onTaskTitleClicked={openTaskSideBar}
+        />
+        <BoardTemplate
+          tasks={tasksDone}
+          title="Done"
+          onTaskTitleClicked={openTaskSideBar}
+        />
       </div>
       <Modal show={show} setShow={setShow} closeModal={() => setShow(false)}>
         <Modal.Header closeModal={() => setShow(false)}>

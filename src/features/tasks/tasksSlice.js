@@ -45,34 +45,44 @@ const tasksSlice = createSlice({
     removeTask: (state, action) => {
       state.tasks = state.tasks.filter(task => task.id !== action.payload)
     },
-    chooseTask: (state, action) => {
-      state.current = state.tasks.find(task => task.id === action.payload)
+    setCurrentTask: (state, action) => {
+      // what if it couldn't find the index? findIndex returns -1
+      const index = state.tasks.findIndex(task => task.id === action.payload)
+      // if (index < 0) {
+      //   console.warn('setCurrentTask provided task with id was not found')
+      //   state.current = null
+      // } else {
+      state.current = index
+      // }
+    },
+    resetCurrentTask: (state, action) => {
+      state.current = null
     },
     updateTaskByAddingStep: (state, action) => {
-      if (state.current) {
-        state.current.steps.push(action.payload)
-      } else {
-        console.log(
-          'Error in taskSlice/updateTaskByAddingStep - there is no current task',
-          action.payload
-        )
-      }
+      // if (state.current) {
+      state.tasks[state.current].steps.push(action.payload)
+      // } else {
+      //   console.warn(
+      //     'Error in taskSlice/updateTaskByAddingStep - there is no current task',
+      //     action.payload
+      //   )
+      // }
     },
     toggleStep: (state, action) => {
-      if (state.current) {
-        const step = state.current.steps.find(
-          step => step.id === action.payload
-        )
-        if (step) {
-          step.completed = !step.completed
-        }
-      } else {
-        console.warn(
-          'Attempted to toggle step of undefined current task',
-          state,
-          action
-        )
-      }
+      // if (state.current) {
+      const step = state.tasks[state.current].steps.find(
+        step => step.id === action.payload
+      )
+      // if (step) {
+      step.completed = !step.completed
+      // }
+      // } else {
+      //   console.warn(
+      //     'Attempted to toggle step of undefined current task',
+      //     state,
+      //     action
+      //   )
+      // }
     },
   },
   extraReducers: {
@@ -90,10 +100,16 @@ const tasksSlice = createSlice({
   },
 })
 
+export const selectCurrentTask = state =>
+  state.tasks.current !== null
+    ? state.tasks.tasks[state.tasks.current]
+    : state.tasks.current
+
 export const {
   addNewTask,
   removeTask,
-  chooseTask,
+  setCurrentTask,
+  resetCurrentTask,
   updateTaskByAddingStep,
   toggleStep,
 } = tasksSlice.actions

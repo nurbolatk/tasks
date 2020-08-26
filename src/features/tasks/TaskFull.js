@@ -1,28 +1,34 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import classnames from 'classnames'
-import { closeRightSideBar } from '../app/appSlice'
-import { updateTaskByAddingStep } from '../tasks/tasksSlice'
+import {
+  updateTaskByAddingStep,
+  selectCurrentTask,
+  resetCurrentTask,
+} from '../tasks/tasksSlice'
 import api from '../../api'
 import Step from './Step'
 import SendIcon from '../../components/icons/SendIcon'
 
 const TaskFull = () => {
-  const task = useSelector(state => state.tasks.current)
+  const task = useSelector(selectCurrentTask)
   const [newStepText, setNewStepText] = useState('')
-  const rightSideBarOpen = useSelector(state => state.app.rightSideBarOpen)
   const dispatch = useDispatch()
 
-  if (!rightSideBarOpen) {
-    console.log('Taskfull opened when it was not supposed to')
-    return null
-  }
-  if (rightSideBarOpen && !task) {
+  if (!task) {
     alert('Attempted to open TaskSideBar without the task')
     return null
   }
+
+  const numCompleted = task.steps.reduce(
+    (count, step) => (step.completed ? count + 1 : count),
+    0
+  )
+  const progress = Math.round((numCompleted / task.steps.length) * 100)
+
   const closeTaskFull = () => {
-    dispatch(closeRightSideBar())
+    // dispatch an action that sets currentTask to null
+    dispatch(resetCurrentTask())
   }
 
   const addStep = async e => {
@@ -54,12 +60,12 @@ const TaskFull = () => {
   return (
     <div
       className={classnames('full-task', {
-        'full-task-open': rightSideBarOpen,
+        'full-task-open': task,
       })}>
       <div className="full-task-header align-center mb-5">
         <div className="full-task-progress align-center">
-          <progress max="100" value="55"></progress>
-          <span>55% completed</span>
+          <progress max="100" value={progress}></progress>
+          <span>{progress}% completed</span>
         </div>
         {/* <div className="full-task-completed">
           <span className="task-priority-color-box"></span>
@@ -95,7 +101,7 @@ const TaskFull = () => {
       <div className="full-task-steps">
         <p className="menu-nav-header mt-4 mb-2">Steps to complete</p>
         {task.steps.map(step => {
-          return <Step key={step.id} step={step} />
+          return <Step key={step.id} step={step} taskId={task.id} />
         })}
         <form onSubmit={addStep} className="task-step-add-form">
           <input

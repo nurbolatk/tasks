@@ -9,15 +9,15 @@ import Tasks from './features/tasks/Tasks'
 import Projects from './features/projects/Projects'
 import TaskFull from './features/tasks/TaskFull'
 import { useSelector } from 'react-redux'
+import { selectCurrentTask } from './features/tasks/tasksSlice'
 
 const App = () => {
-  const rightSideBarOpen = useSelector(state => state.app.rightSideBarOpen)
-
+  const currentTask = useSelector(selectCurrentTask)
   return (
     <Router>
       <div
         className={classnames('app', {
-          'app-right-sidebar-open': rightSideBarOpen,
+          'app-right-sidebar-open': currentTask,
         })}>
         <Topbar />
         <Sidebar />
@@ -33,7 +33,7 @@ const App = () => {
           </Route>
         </Switch>
 
-        {rightSideBarOpen && <TaskFull />}
+        {currentTask && <TaskFull />}
       </div>
     </Router>
   )
