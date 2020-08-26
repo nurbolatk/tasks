@@ -11,6 +11,7 @@ import {
   selectCurrentTask,
   resetCurrentTask,
 } from './tasksSlice'
+import Task from './Task'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
@@ -52,7 +53,7 @@ const TasksDashboard = () => {
   //   }
   // }
 
-  const openTaskFull = e => {
+  const openTaskSideBar = e => {
     const { taskId } = e.target.dataset
     if (!currentTask) {
       dispatch(setCurrentTask(taskId))
@@ -78,147 +79,24 @@ const TasksDashboard = () => {
         <div className="card task-dashboard-board task-dashboard-board-todo">
           <h3 className="card-title m-0">Todo</h3>
           <div className="task-list">
-            {tasks.map((task, index) => (
-              <div
-                key={task.id}
-                // className={classnames('task', {
-                //   'pb-4': index === 0,
-                //   'pt-4': index === tasks.length - 1,
-                //   'py-5': index > 0 && index < tasks.length - 1,
-                // })}>
-                className="task py-5">
-                <button
-                  data-task-id={task.id}
-                  className="task-text mb-1"
-                  onClick={openTaskFull}>
-                  {task.text}
-                </button>
-                <p className="task-description text-secondary mb-3 ">
-                  {task.description}
-                </p>
-                <div className="task-footer">
-                  <div className="gx-1  task-progress">
-                    <p className="task-progress-label text-tertiary">
-                      Progress
-                    </p>
-                    <progress
-                      className="task-progress-bar"
-                      max="100"
-                      value="70"></progress>
-                    <span className="task-progress-value">0%</span>
-                  </div>
-                  <div className="task-priority">
-                    <p className="text-tertiary mb-1">Priority:</p>
-                    <div className="d-flex align-center">
-                      <span
-                        className={`task-priority-color-box task-priority-color-box-${task.priority.toLowerCase()}`}></span>
-                      <span>{task.priority}</span>
-                    </div>
-                  </div>
-                  <div className=" task-deadline">
-                    <p className="text-tertiary mb-1">Due:</p>
-                    <span>Today</span>
-                  </div>
-                </div>
-              </div>
+            {tasks.map(task => (
+              <Task key={task.id} task={task} onTitleClick={openTaskSideBar} />
             ))}
           </div>
         </div>
         <div className="card task-board task-board-doing">
           <h3 className="card-title m-0">Doing</h3>
           <div className="task-list">
-            {tasks.map((task, index) => (
-              <div
-                key={task.id}
-                // className={classnames('task', {
-                //   'pb-4': index === 0,
-                //   'pt-4': index === tasks.length - 1,
-                //   'py-5': index > 0 && index < tasks.length - 1,
-                // })}>
-                className="task py-5">
-                <button
-                  data-task-id={task.id}
-                  className="task-text mb-1"
-                  onClick={openTaskFull}>
-                  {task.text}
-                </button>
-                <p className="task-description text-secondary mb-3 ">
-                  {task.description}
-                </p>
-                <div className="task-footer">
-                  <div className="gx-1  task-progress">
-                    <p className="task-progress-label text-tertiary">
-                      Progress
-                    </p>
-                    <progress
-                      className="task-progress-bar"
-                      max="100"
-                      value="70"></progress>
-                    <span className="task-progress-value">0%</span>
-                  </div>
-                  <div className="task-priority">
-                    <p className="text-tertiary mb-1">Priority:</p>
-                    <div className="d-flex align-center">
-                      <span
-                        className={`task-priority-color-box task-priority-color-box-${task.priority.toLowerCase()}`}></span>
-                      <span>{task.priority}</span>
-                    </div>
-                  </div>
-                  <div className=" task-deadline">
-                    <p className="text-tertiary mb-1">Due:</p>
-                    <span>Today</span>
-                  </div>
-                </div>
-              </div>
+            {tasks.map(task => (
+              <Task key={task.id} task={task} onTitleClick={openTaskSideBar} />
             ))}
           </div>
         </div>
         <div className="card task-board task-board-done">
           <h3 className="card-title m-0">Done</h3>
           <div className="task-list">
-            {tasks.map((task, index) => (
-              <div
-                key={task.id}
-                // className={classnames('task', {
-                //   'pb-4': index === 0,
-                //   'pt-4': index === tasks.length - 1,
-                //   'py-5': index > 0 && index < tasks.length - 1,
-                // })}>
-                className="task py-5">
-                <button
-                  data-task-id={task.id}
-                  className="task-text mb-1"
-                  onClick={openTaskFull}>
-                  {task.text}
-                </button>
-                <p className="task-description text-secondary mb-3 ">
-                  {task.description}
-                </p>
-                <div className="task-footer">
-                  <div className="gx-1  task-progress">
-                    <p className="task-progress-label text-tertiary">
-                      Progress
-                    </p>
-                    <progress
-                      className="task-progress-bar"
-                      max="100"
-                      value="70"></progress>
-                    <span className="task-progress-value">0%</span>
-                  </div>
-                  <div className="task-priority">
-                    <p className="text-tertiary mb-1">Priority:</p>
-                    <div className="d-flex align-center">
-                      <span
-                        className={`task-priority-color-box task-priority-color-box-${task.priority.toLowerCase()}`}></span>
-                      <span>{task.priority}</span>
-                    </div>
-                  </div>
-                  <div className=" task-deadline">
-                    <p className="text-tertiary mb-1">Due:</p>
-                    <span>Today</span>
-                  </div>
-                </div>
-              </div>
+            {tasks.map(task => (
+              <Task key={task.id} task={task} onTitleClick={openTaskSideBar} />
             ))}
           </div>
         </div>
