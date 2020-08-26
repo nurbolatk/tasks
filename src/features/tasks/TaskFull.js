@@ -1,28 +1,28 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import classnames from 'classnames'
-import { closeRightSideBar } from '../app/appSlice'
-import { updateTaskByAddingStep } from '../tasks/tasksSlice'
+import {
+  updateTaskByAddingStep,
+  selectCurrentTask,
+  resetCurrentTask,
+} from '../tasks/tasksSlice'
 import api from '../../api'
 import Step from './Step'
 import SendIcon from '../../components/icons/SendIcon'
 
 const TaskFull = () => {
-  const task = useSelector(state => state.tasks.current)
+  const task = useSelector(selectCurrentTask)
   const [newStepText, setNewStepText] = useState('')
-  const rightSideBarOpen = useSelector(state => state.app.rightSideBarOpen)
   const dispatch = useDispatch()
 
-  if (!rightSideBarOpen) {
-    console.log('Taskfull opened when it was not supposed to')
-    return null
-  }
-  if (rightSideBarOpen && !task) {
+  if (!task) {
     alert('Attempted to open TaskSideBar without the task')
     return null
   }
+
   const closeTaskFull = () => {
-    dispatch(closeRightSideBar())
+    // dispatch an action that sets currentTask to null
+    dispatch(resetCurrentTask())
   }
 
   const addStep = async e => {
@@ -54,7 +54,7 @@ const TaskFull = () => {
   return (
     <div
       className={classnames('full-task', {
-        'full-task-open': rightSideBarOpen,
+        'full-task-open': task,
       })}>
       <div className="full-task-header align-center mb-5">
         <div className="full-task-progress align-center">

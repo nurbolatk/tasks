@@ -5,16 +5,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { chooseCurrentProject } from '../projects/projectsSlice'
 import Modal from '../../components/molecules/Modal'
 import CreateTask from './CreateTask'
-import { fetchTasks, chooseTask } from './tasksSlice'
-import { closeRightSideBar, openRightSideBar } from '../app/appSlice'
+import {
+  fetchTasks,
+  setCurrentTask,
+  selectCurrentTask,
+  resetCurrentTask,
+} from './tasksSlice'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
   const { projectId } = match.params
   const dispatch = useDispatch()
   const [show, setShow] = useState(false)
-  const currentTask = useSelector(state => state.tasks.current)
-  const rightSideBarOpen = useSelector(state => state.app.rightSideBarOpen)
+  const currentTask = useSelector(selectCurrentTask)
 
   useEffect(() => {
     dispatch(chooseCurrentProject(projectId))
@@ -51,18 +54,14 @@ const TasksDashboard = () => {
 
   const openTaskFull = e => {
     const { taskId } = e.target.dataset
-    if (!rightSideBarOpen) {
-      dispatch(openRightSideBar())
-      dispatch(chooseTask(taskId))
+    if (!currentTask) {
+      dispatch(setCurrentTask(taskId))
     } else {
-      if (currentTask) {
-        if (taskId === currentTask.id) {
-          dispatch(closeRightSideBar())
-        } else {
-          dispatch(chooseTask(taskId))
-        }
+      if (taskId === currentTask.id) {
+        // dispatch an action that sets currentTask to null
+        dispatch(resetCurrentTask())
       } else {
-        console.log('Right side bar is open but currentTask is null :-0')
+        dispatch(setCurrentTask(taskId))
       }
     }
   }
