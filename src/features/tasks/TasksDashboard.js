@@ -11,7 +11,10 @@ import {
   selectCurrentTask,
   resetCurrentTask,
 } from './tasksSlice'
-import Task from './Task'
+// import BoardTodo from './BoardTodo'
+// import BoardDoing from './BoardDoing'
+// import BoardDone from './BoardDone'
+import BoardTemplate from './BoardTemplate'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
@@ -21,12 +24,12 @@ const TasksDashboard = () => {
   const currentTask = useSelector(selectCurrentTask)
 
   useEffect(() => {
-    dispatch(chooseCurrentProject(projectId))
-  }, [projectId, dispatch])
-
-  useEffect(() => {
     dispatch(fetchTasks())
   }, [dispatch])
+
+  useEffect(() => {
+    dispatch(chooseCurrentProject(projectId))
+  }, [projectId, dispatch])
 
   const tasks = useSelector(state =>
     state.tasks.tasks.filter(task => task.project.id === projectId)
@@ -35,9 +38,34 @@ const TasksDashboard = () => {
   const project = useSelector(state =>
     state.projects.projects.find(project => project.id === projectId)
   )
+
   if (!project) {
     return <div>Loading...</div>
   }
+
+  const tasksTodo = []
+  const tasksDoing = []
+  const tasksDone = []
+
+  tasks.forEach(task => {
+    let completedSteps = 0
+    task.steps.forEach(step => {
+      if (step.completed) {
+        completedSteps++
+      }
+    })
+    console.log(task.text, completedSteps)
+    switch (completedSteps) {
+      case 0:
+        tasksTodo.push(task)
+        break
+      case task.steps.length:
+        tasksDone.push(task)
+        break
+      default:
+        tasksDoing.push(task)
+    }
+  })
 
   // const deleteTask = async e => {
   //   const { taskId } = e.target.dataset
@@ -76,30 +104,21 @@ const TasksDashboard = () => {
         </button>
       </div>
       <div className="grid grid-3 my-5 task-dashboard-body ">
-        <div className="card task-dashboard-board task-dashboard-board-todo">
-          <h3 className="card-title m-0">Todo</h3>
-          <div className="task-list">
-            {tasks.map(task => (
-              <Task key={task.id} task={task} onTitleClick={openTaskSideBar} />
-            ))}
-          </div>
-        </div>
-        <div className="card task-board task-board-doing">
-          <h3 className="card-title m-0">Doing</h3>
-          <div className="task-list">
-            {tasks.map(task => (
-              <Task key={task.id} task={task} onTitleClick={openTaskSideBar} />
-            ))}
-          </div>
-        </div>
-        <div className="card task-board task-board-done">
-          <h3 className="card-title m-0">Done</h3>
-          <div className="task-list">
-            {tasks.map(task => (
-              <Task key={task.id} task={task} onTitleClick={openTaskSideBar} />
-            ))}
-          </div>
-        </div>
+        <BoardTemplate
+          tasks={tasksTodo}
+          title="Todo"
+          onTaskTitleClicked={openTaskSideBar}
+        />
+        <BoardTemplate
+          tasks={tasksDoing}
+          title="Doing"
+          onTaskTitleClicked={openTaskSideBar}
+        />
+        <BoardTemplate
+          tasks={tasksDone}
+          title="Done"
+          onTaskTitleClicked={openTaskSideBar}
+        />
       </div>
       <Modal show={show} setShow={setShow} closeModal={() => setShow(false)}>
         <Modal.Header closeModal={() => setShow(false)}>
