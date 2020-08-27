@@ -1,11 +1,7 @@
 import React, { useEffect } from 'react'
 import classnames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  fetchProjects,
-  selectCurrentProject,
-  setCurrentProject,
-} from './projectsSlice'
+import { fetchProjects, selectCurrentProject } from './projectsSlice'
 import { useHistory } from 'react-router-dom'
 
 const ProjectsList = () => {
@@ -28,8 +24,8 @@ const ProjectsList = () => {
 
   const chooseProject = project => {
     if (currentProjectId !== project.id) {
-      dispatch(setCurrentProject({ id: project.id, history }))
-      // history.push(`/tasks/${project.id}`)
+      // dispatch(setCurrentProject({ id: project.id, history }))
+      history.push(`/tasks/${project.id}`)
     }
   }
 

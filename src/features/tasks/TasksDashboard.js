@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useRouteMatch, useHistory } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteProject, selectCurrentProject } from '../projects/projectsSlice'
+import { deleteProject, setCurrentProject } from '../projects/projectsSlice'
 import Modal from '../../components/molecules/Modal'
 import CreateTask from './CreateTask'
 import {
@@ -15,8 +15,9 @@ import {
 // import BoardDoing from './BoardDoing'
 // import BoardDone from './BoardDone'
 import BoardTemplate from './BoardTemplate'
-import SettingsIcon from '../../components/icons/SettingsIcon'
 import api from '../../api'
+import ProjectSettingsDropdown from './ProjectSettingsDropdown'
+import Dropdown from '../../components/molecules/Dropdown'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
@@ -30,6 +31,10 @@ const TasksDashboard = () => {
     dispatch(fetchTasks())
   }, [dispatch])
 
+  useEffect(() => {
+    dispatch(setCurrentProject(projectId))
+  }, [dispatch, projectId])
+
   const tasks = useSelector(state =>
     state.tasks.tasks.filter(task => task.project.id === projectId)
   )
@@ -37,7 +42,6 @@ const TasksDashboard = () => {
   const project = useSelector(state =>
     state.projects.projects.find(project => project.id === projectId)
   )
-  console.log('TasksDashboard -> project', project)
 
   if (!project) {
     return <div>Loading...</div>
@@ -96,11 +100,14 @@ const TasksDashboard = () => {
     <div className="task-dashboard">
       <div className="task-dashboard-header d-flex">
         <h2 className="task-dashboard-header-name">{project.name}</h2>
-        <button
-          className="btn-icon btn-icon-fill-dark ml-2"
-          onClick={onDeleteProjectClicked}>
-          <SettingsIcon />
-        </button>
+        <ProjectSettingsDropdown>
+          <Dropdown>
+            <Dropdown.Item>Edit</Dropdown.Item>
+            <Dropdown.Item handleClick={onDeleteProjectClicked}>
+              Delete
+            </Dropdown.Item>
+          </Dropdown>
+        </ProjectSettingsDropdown>
         <button onClick={() => setShow(true)} className="btn btn-primary">
           Add task
         </button>

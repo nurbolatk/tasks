@@ -29,8 +29,7 @@ const projectsSlice = createSlice({
   initialState,
   reducers: {
     setCurrentProject: (state, action) => {
-      state.current = action.payload.id
-      action.payload.history.push(`/tasks/${action.payload.id}`)
+      state.current = action.payload
     },
     deleteProject: (state, action) => {
       if (state.current === action.payload.id) {

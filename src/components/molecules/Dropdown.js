@@ -1,7 +1,11 @@
 import React from 'react'
 
 const DropdownItem = props => {
-  return <button className="dropdown-item">{props.children}</button>
+  return (
+    <button className="dropdown-item" onClick={props.handleClick}>
+      {props.children}
+    </button>
+  )
 }
 
 const Dropdown = ({ children }) => {
