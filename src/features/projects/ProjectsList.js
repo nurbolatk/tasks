@@ -6,11 +6,13 @@ import {
   selectCurrentProject,
   setCurrentProject,
 } from './projectsSlice'
+import { useHistory } from 'react-router-dom'
 
 const ProjectsList = () => {
   const projects = useSelector(state => state.projects.projects)
   const currentProjectId = useSelector(selectCurrentProject)
   const dispatch = useDispatch()
+  const history = useHistory()
 
   useEffect(() => {
     dispatch(fetchProjects())
@@ -26,8 +28,8 @@ const ProjectsList = () => {
 
   const chooseProject = project => {
     if (currentProjectId !== project.id) {
+      dispatch(setCurrentProject({ id: project.id, history }))
       // history.push(`/tasks/${project.id}`)
-      dispatch(setCurrentProject(project.id))
     }
   }
 

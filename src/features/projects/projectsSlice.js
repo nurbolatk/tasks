@@ -14,34 +14,51 @@ export const fetchProjects = createAsyncThunk(
   }
 )
 
+// export const deleteProjectAsync = createAsyncThunk('projects/deleteProject', async (projectId, history) => {
+//   try {
+//     await api.delete('/projects/id', projectId)
+//     // history.replace('/tasks')
+//   } catch (error) {
+//     console.error(error.message)
+//     alert(error.message)
+//   }
+// })
+
 const projectsSlice = createSlice({
   name: 'projects',
   initialState,
   reducers: {
     setCurrentProject: (state, action) => {
-      state.current = action.payload
+      state.current = action.payload.id
+      action.payload.history.push(`/tasks/${action.payload.id}`)
     },
     deleteProject: (state, action) => {
-      state.projects = state.projects.filter(project =>
-        project.id === action.payload.id ? false : true
-      )
       if (state.current === action.payload.id) {
+        const projects = state.projects.filter(project =>
+          project.id === action.payload.id ? false : true
+        )
         if (state.projects[0]) {
-          state.current = state.projects[0].id
           console.log(
             'redux',
             state.current,
             action.payload.id,
             state.projects[0].id
           )
-          // action.payload.history.replace(`/tasks/${state.current}`)
+          state = {
+            current: state.projects[0].id,
+            projects,
+          }
+          action.payload.history.replace(`/tasks/${state.current}`)
         } else {
-          state.current = null
-          // action.payload.history.replace(`/tasks`)
+          state = {
+            current: null,
+            projects,
+          }
+          action.payload.history.replace(`/tasks`)
         }
       }
     },
-    addProject: (state, action, extra) => {
+    addProject: (state, action) => {
       state.projects.push(action.payload)
     },
   },

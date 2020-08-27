@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useRouteMatch, useHistory } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteProject } from '../projects/projectsSlice'
+import { deleteProject, selectCurrentProject } from '../projects/projectsSlice'
 import Modal from '../../components/molecules/Modal'
 import CreateTask from './CreateTask'
 import {
@@ -24,12 +24,11 @@ const TasksDashboard = () => {
   const dispatch = useDispatch()
   const [show, setShow] = useState(false)
   const currentTask = useSelector(selectCurrentTask)
+  const history = useHistory()
 
   useEffect(() => {
     dispatch(fetchTasks())
   }, [dispatch])
-
-  const history = useHistory()
 
   const tasks = useSelector(state =>
     state.tasks.tasks.filter(task => task.project.id === projectId)
@@ -38,6 +37,7 @@ const TasksDashboard = () => {
   const project = useSelector(state =>
     state.projects.projects.find(project => project.id === projectId)
   )
+  console.log('TasksDashboard -> project', project)
 
   if (!project) {
     return <div>Loading...</div>
@@ -84,8 +84,8 @@ const TasksDashboard = () => {
   const onDeleteProjectClicked = async () => {
     try {
       await api.delete('/projects/id', projectId)
-      dispatch(deleteProject({ id: projectId }))
-      history.replace('/tasks')
+      dispatch(deleteProject({ id: projectId, history }))
+      // history.replace('/tasks')
     } catch (error) {
       console.error(error.message)
       alert(error.message)
