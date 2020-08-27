@@ -28,6 +28,12 @@ const projectsSlice = createSlice({
       if (state.current === action.payload.id) {
         if (state.projects[0]) {
           state.current = state.projects[0].id
+          console.log(
+            'redux',
+            state.current,
+            action.payload.id,
+            state.projects[0].id
+          )
           // action.payload.history.replace(`/tasks/${state.current}`)
         } else {
           state.current = null
@@ -36,8 +42,6 @@ const projectsSlice = createSlice({
       }
     },
     addProject: (state, action, extra) => {
-      console.log(action)
-      console.log(extra)
       state.projects.push(action.payload)
     },
   },

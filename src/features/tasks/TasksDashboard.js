@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useRouteMatch, useHistory } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentProject, deleteProject } from '../projects/projectsSlice'
+import { deleteProject } from '../projects/projectsSlice'
 import Modal from '../../components/molecules/Modal'
 import CreateTask from './CreateTask'
 import {
@@ -28,10 +28,6 @@ const TasksDashboard = () => {
   useEffect(() => {
     dispatch(fetchTasks())
   }, [dispatch])
-
-  useEffect(() => {
-    dispatch(setCurrentProject(projectId))
-  }, [projectId, dispatch])
 
   const history = useHistory()
 
