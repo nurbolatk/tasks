@@ -88,7 +88,8 @@ const TasksDashboard = () => {
   const onDeleteProjectClicked = async () => {
     try {
       await api.delete('/projects/id', projectId)
-      dispatch(deleteProject({ id: projectId, history }))
+      dispatch(deleteProject({ id: projectId }))
+      history.replace('/tasks')
     } catch (error) {
       console.error(error.message)
       alert(error.message)

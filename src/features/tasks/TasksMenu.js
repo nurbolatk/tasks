@@ -151,7 +151,7 @@ const TasksMenu = () => {
         <Modal.Header closeModal={() => setShowProjectModal(false)}>
           Create a new project
         </Modal.Header>
-        <CreateProjectForm />
+        <CreateProjectForm setShowProjectModal={setShowProjectModal} />
       </Modal>
     </div>
   )
