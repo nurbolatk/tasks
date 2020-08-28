@@ -52,22 +52,28 @@ const TasksDashboard = () => {
   const tasksDone = []
 
   tasks.forEach(task => {
-    let completedSteps = 0
-    task.steps.forEach(step => {
-      if (step.completed) {
-        completedSteps++
-      }
-    })
+    if (task.steps.length) {
+      let completedSteps = 0
+      task.steps.forEach(step => {
+        if (step.completed) {
+          completedSteps++
+        }
+      })
 
-    switch (completedSteps) {
-      case 0:
-        tasksTodo.push(task)
-        break
-      case task.steps.length:
-        tasksDone.push(task)
-        break
-      default:
-        tasksDoing.push(task)
+      switch (completedSteps) {
+        case 0:
+          tasksTodo.push(task)
+          break
+        case task.steps.length:
+          tasksDone.push(task)
+          break
+        default:
+          tasksDoing.push(task)
+      }
+    } else {
+      if (task.completed) tasksDone.push(task)
+      else tasksTodo.push(task)
+      // tasksTodo.push(task)
     }
   })
 

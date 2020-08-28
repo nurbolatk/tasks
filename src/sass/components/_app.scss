@@ -60,6 +60,11 @@
     display: flex;
     margin-bottom: 0.5rem;
     margin-left: 2px;
+
+    &-check {
+      margin-left: 1rem;
+      cursor: pointer;
+    }
   }
   &-field {
     background-color: $gray-10;
@@ -76,6 +81,26 @@
     &:active {
       outline: none;
       border: 2px solid rgba($blue, 0.5);
+    }
+  }
+
+  &-check {
+    width: 1.7rem;
+    height: 1.7rem;
+    background-color: $gray-10;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: $form-check-input-border;
+    appearance: none;
+    color-adjust: exact; // Keep themed appearance for print
+    transition: $form-check-transition;
+    border-radius: $border-radius;
+    cursor: pointer;
+
+    &:checked {
+      background-image: url(../../assets/check-icon.svg);
+      background-color: $color-primary;
     }
   }
 }

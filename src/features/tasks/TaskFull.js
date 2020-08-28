@@ -6,6 +6,7 @@ import {
   selectCurrentTask,
   resetCurrentTask,
   removeTask,
+  toggleStatus,
 } from '../tasks/tasksSlice'
 import api from '../../api'
 import Step from './Step'
@@ -73,21 +74,46 @@ const TaskFull = () => {
       }
     }
   }
-
+  const handleTaskStatusChange = async () => {
+    dispatch(toggleStatus(task.id))
+    try {
+      await api.post('/updateTaskState/:id', task.id)
+    } catch (error) {
+      alert(error.message)
+      dispatch(toggleStatus(task.id))
+    }
+  }
   return (
     <div
       className={classnames('full-task', {
         'full-task-open': task,
       })}>
       <div className="full-task-header align-center mb-5">
-        <div className="full-task-progress align-center mr-auto">
-          <progress max="100" value={progress}></progress>
-          <span>{progress}% completed</span>
-        </div>
+        {task.steps.length ? (
+          <div className="full-task-progress align-center mr-auto">
+            <progress max="100" value={progress}></progress>
+            <span>{progress}% completed</span>
+          </div>
+        ) : (
+          <div className="d-flex align-center">
+            <input
+              type="checkbox"
+              id={`status-${task.id}`}
+              className="form-check"
+              value={task.completed}
+              onChange={handleTaskStatusChange}
+            />
+            <label htmlFor={`status-${task.id}`} className="form-label-check">
+              {task.completed ? 'Completed' : 'Not done'}
+            </label>
+          </div>
+        )}
+
         {/* <div className="full-task-completed">
           <span className="task-priority-color-box"></span>
           Completed
         </div> */}
+
         <button
           className="btn-icon btn-icon-fill-dark mr-2"
           onClick={deleteTask}>
