@@ -95,12 +95,12 @@ const TaskFull = () => {
             <span>{progress}% completed</span>
           </div>
         ) : (
-          <div className="d-flex align-center">
+          <div className="d-flex align-center mr-auto">
             <input
               type="checkbox"
               id={`status-${task.id}`}
               className="form-check"
-              value={task.completed}
+              checked={task.completed}
               onChange={handleTaskStatusChange}
             />
             <label htmlFor={`status-${task.id}`} className="form-label-check">

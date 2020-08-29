@@ -73,7 +73,6 @@ const TasksDashboard = () => {
     } else {
       if (task.completed) tasksDone.push(task)
       else tasksTodo.push(task)
-      // tasksTodo.push(task)
     }
   })
 
@@ -121,7 +120,7 @@ const TasksDashboard = () => {
       <div className="grid grid-3 my-5 task-dashboard-body ">
         <BoardTemplate
           tasks={tasksTodo}
-          title="Todo"
+          title="To do"
           onTaskTitleClicked={openTaskSideBar}
         />
         <BoardTemplate
@@ -135,10 +134,7 @@ const TasksDashboard = () => {
           onTaskTitleClicked={openTaskSideBar}
         />
       </div>
-      <Modal show={show} setShow={setShow} closeModal={() => setShow(false)}>
-        <Modal.Header closeModal={() => setShow(false)}>
-          Create a new task
-        </Modal.Header>
+      <Modal show={show} setShow={setShow} title="Create a new task">
         <CreateTask />
       </Modal>
     </div>

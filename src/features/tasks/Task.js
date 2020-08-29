@@ -5,7 +5,6 @@ import api from '../../api'
 
 const Task = ({ task, onTitleClick }) => {
   const dispatch = useDispatch()
-  console.log(task.text, task.completed)
   const numCompleted = task.steps.reduce(
     (count, step) => (step.completed ? count + 1 : count),
     0
@@ -51,7 +50,7 @@ const Task = ({ task, onTitleClick }) => {
                 type="checkbox"
                 id={`status-${task.id}`}
                 className="form-check"
-                value={task.completed}
+                checked={task.completed}
                 onChange={handleTaskStatusChange}
               />
               <label htmlFor={`status-${task.id}`} className="form-label-check">
