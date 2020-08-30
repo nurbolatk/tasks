@@ -39,7 +39,17 @@ const api = {
               status: 200,
               data: res,
             })
-
+          case '/updateTaskState/:id':
+            const idOfTaskWithUpdatedStatus = updateTaskState(body)
+            if (idOfTaskWithUpdatedStatus) {
+              return resolve({
+                status: 200,
+              })
+            }
+            return reject({
+              status: 404,
+              message: 'There is no task with such id',
+            })
           case '/projects':
             return resolve({
               status: 200,
@@ -138,7 +148,7 @@ const getAllTasks = () => {
   return data.tasks
 }
 const createTask = task => {
-  data.tasks = [...data.tasks, { ...task, steps: [] }]
+  data.tasks = [...data.tasks, { ...task, completed: false, steps: [] }]
   updateTasksLocalStorage()
   return data.tasks[data.tasks.length - 1]
 }
@@ -194,6 +204,21 @@ const updateStep = ({ taskId, updatedStep }) => {
     taskExists,
     stepExists,
   }
+}
+const updateTaskState = id => {
+  const found = data.tasks.find(task => task.id === id)
+  if (!found) return false
+  data.tasks = data.tasks.map(task => {
+    if (task.id === id) {
+      return {
+        ...task,
+        completed: !task.completed,
+      }
+    }
+    return task
+  })
+  updateTasksLocalStorage()
+  return true
 }
 
 // Projects

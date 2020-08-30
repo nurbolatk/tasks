@@ -2,8 +2,8 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { toggleStep } from './tasksSlice'
 import DragIcon from '../../components/icons/DragIcon'
-import MoreHorizontalIcon from '../../components/icons/MoreHorizontalIcon'
 import api from '../../api'
+import EditStepDropdown from './EditStepDropdown'
 
 const Step = ({ step, taskId }) => {
   const dispatch = useDispatch()
@@ -38,9 +38,10 @@ const Step = ({ step, taskId }) => {
       <label className="task-step-label" htmlFor={`step-${step.id}`}>
         {step.text}
       </label>
-      <button className="btn-icon task-step-more">
+      <EditStepDropdown />
+      {/* <button className="btn-icon task-step-more">
         <MoreHorizontalIcon />
-      </button>
+      </button> */}
     </div>
   )
 }

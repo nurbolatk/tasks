@@ -1,0 +1,28 @@
+.dropdown-container {
+  position: relative;
+}
+.dropdown {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 0.4rem;
+  background-color: $color-bg;
+  // top: 2rem;
+  right: 0;
+  border-radius: $border-radius;
+  overflow: hidden;
+  border: $line;
+  box-shadow: 0 5px 5px rgba($color: #000000, $alpha: 0.1);
+
+  &-item {
+    padding: 4px 1rem;
+    border: none;
+    background-color: transparent;
+    color: $color-text;
+    transition: background-color 0.2s;
+    &:hover {
+      background-color: $color-bg-secondary;
+      cursor: pointer;
+    }
+  }
+}

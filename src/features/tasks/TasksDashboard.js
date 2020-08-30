@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useRouteMatch, useHistory } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentProject, deleteProject } from '../projects/projectsSlice'
+import { deleteProject, setCurrentProject } from '../projects/projectsSlice'
 import Modal from '../../components/molecules/Modal'
 import CreateTask from './CreateTask'
 import {
@@ -15,8 +15,9 @@ import {
 // import BoardDoing from './BoardDoing'
 // import BoardDone from './BoardDone'
 import BoardTemplate from './BoardTemplate'
-import SettingsIcon from '../../components/icons/SettingsIcon'
 import api from '../../api'
+import ProjectSettingsDropdown from './ProjectSettingsDropdown'
+import Dropdown from '../../components/molecules/Dropdown'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
@@ -24,6 +25,7 @@ const TasksDashboard = () => {
   const dispatch = useDispatch()
   const [show, setShow] = useState(false)
   const currentTask = useSelector(selectCurrentTask)
+  const history = useHistory()
 
   useEffect(() => {
     dispatch(fetchTasks())
@@ -31,9 +33,7 @@ const TasksDashboard = () => {
 
   useEffect(() => {
     dispatch(setCurrentProject(projectId))
-  }, [projectId, dispatch])
-
-  const history = useHistory()
+  }, [dispatch, projectId])
 
   const tasks = useSelector(state =>
     state.tasks.tasks.filter(task => task.project.id === projectId)
@@ -52,22 +52,27 @@ const TasksDashboard = () => {
   const tasksDone = []
 
   tasks.forEach(task => {
-    let completedSteps = 0
-    task.steps.forEach(step => {
-      if (step.completed) {
-        completedSteps++
-      }
-    })
+    if (task.steps.length) {
+      let completedSteps = 0
+      task.steps.forEach(step => {
+        if (step.completed) {
+          completedSteps++
+        }
+      })
 
-    switch (completedSteps) {
-      case 0:
-        tasksTodo.push(task)
-        break
-      case task.steps.length:
-        tasksDone.push(task)
-        break
-      default:
-        tasksDoing.push(task)
+      switch (completedSteps) {
+        case 0:
+          tasksTodo.push(task)
+          break
+        case task.steps.length:
+          tasksDone.push(task)
+          break
+        default:
+          tasksDoing.push(task)
+      }
+    } else {
+      if (task.completed) tasksDone.push(task)
+      else tasksTodo.push(task)
     }
   })
 
@@ -89,6 +94,7 @@ const TasksDashboard = () => {
     try {
       await api.delete('/projects/id', projectId)
       dispatch(deleteProject({ id: projectId, history }))
+      // history.replace('/tasks')
     } catch (error) {
       console.error(error.message)
       alert(error.message)
@@ -99,11 +105,14 @@ const TasksDashboard = () => {
     <div className="task-dashboard">
       <div className="task-dashboard-header d-flex">
         <h2 className="task-dashboard-header-name">{project.name}</h2>
-        <button
-          className="btn-icon btn-icon-fill-dark ml-2"
-          onClick={onDeleteProjectClicked}>
-          <SettingsIcon />
-        </button>
+        <ProjectSettingsDropdown>
+          <Dropdown>
+            <Dropdown.Item>Edit</Dropdown.Item>
+            <Dropdown.Item handleClick={onDeleteProjectClicked}>
+              Delete
+            </Dropdown.Item>
+          </Dropdown>
+        </ProjectSettingsDropdown>
         <button onClick={() => setShow(true)} className="btn btn-primary">
           Add task
         </button>
@@ -111,7 +120,7 @@ const TasksDashboard = () => {
       <div className="grid grid-3 my-5 task-dashboard-body ">
         <BoardTemplate
           tasks={tasksTodo}
-          title="Todo"
+          title="To do"
           onTaskTitleClicked={openTaskSideBar}
         />
         <BoardTemplate
@@ -125,10 +134,7 @@ const TasksDashboard = () => {
           onTaskTitleClicked={openTaskSideBar}
         />
       </div>
-      <Modal show={show} setShow={setShow} closeModal={() => setShow(false)}>
-        <Modal.Header closeModal={() => setShow(false)}>
-          Create a new task
-        </Modal.Header>
+      <Modal show={show} setShow={setShow} title="Create a new task">
         <CreateTask />
       </Modal>
     </div>

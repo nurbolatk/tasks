@@ -1,52 +1,40 @@
 import React, { useEffect } from 'react'
-// import { useDispatch } from 'react-redux'
-import classnames from 'classnames'
-import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProjects, selectCurrentProject } from './projectsSlice'
+import { useHistory } from 'react-router-dom'
+import Menu from '../../components/organisms/Menu'
 
 const ProjectsList = () => {
-  // const dispatch = useDispatch()
-  const history = useHistory()
   const projects = useSelector(state => state.projects.projects)
   const currentProjectId = useSelector(selectCurrentProject)
-
-  const classes = projectId =>
-    classnames([
-      'menu-nav-list-item',
-      {
-        'menu-nav-list-item-active': currentProjectId === projectId,
-      },
-    ])
-
-  const chooseProject = project => {
-    // dispatch(
-    //   chooseCurrentProject({
-    //     project,
-    //   })
-    // )
-    if (currentProjectId !== project.id) {
-      history.push(`/tasks/${project.id}`)
-    }
-  }
-
   const dispatch = useDispatch()
+  const history = useHistory()
+
   useEffect(() => {
     dispatch(fetchProjects())
   }, [dispatch])
 
+  const chooseProject = project => {
+    if (currentProjectId !== project.id) {
+      // dispatch(setCurrentProject({ id: project.id, history }))
+      history.push(`/tasks/${project.id}`)
+    }
+  }
+
   return (
     <>
       {projects.map(project => (
-        <button
-          className={classes(project.id)}
+        <Menu.Item
           key={project.id}
-          onClick={() => chooseProject(project)}>
-          <span
-            className="menu-nav-list-item-color"
-            style={{ backgroundColor: project.color }}></span>
-          <span className="menu-nav-list-item-text">{project.name}</span>
-        </button>
+          text={project.name}
+          active={currentProjectId === project.id}
+          colorBox={
+            <span
+              className="menu-nav-list-item-color"
+              style={{ backgroundColor: project.color }}></span>
+          }
+          onItemClick={() => chooseProject(project)}
+        />
       ))}
     </>
   )

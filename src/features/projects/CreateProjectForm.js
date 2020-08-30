@@ -1,6 +1,8 @@
 import React, { useReducer } from 'react'
 import api from '../../api'
 import { nanoid } from '@reduxjs/toolkit'
+import { useDispatch } from 'react-redux'
+import { addProject } from './projectsSlice'
 
 const initialState = {
   name: '',
@@ -19,8 +21,9 @@ const reducer = (state, action) => {
   }
 }
 
-const CreateProjectForm = () => {
+const CreateProjectForm = ({ setShowProjectModal }) => {
   const [project, setProject] = useReducer(reducer, initialState)
+  const dispatch = useDispatch()
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -30,8 +33,13 @@ const CreateProjectForm = () => {
   const handleSubmit = async e => {
     e.preventDefault()
     if (!project.id) project.id = nanoid()
-    const res = await api.post('/projects', project)
-    console.log('Projects -> res', res)
+    try {
+      const res = await api.post('/projects', project)
+      dispatch(addProject(res.data), { hoho: 'haha' })
+      setShowProjectModal(false)
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
   return (

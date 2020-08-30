@@ -84,6 +84,12 @@ const tasksSlice = createSlice({
       //   )
       // }
     },
+    toggleStatus: (state, action) => {
+      const task = state.tasks.find(task => action.payload === task.id)
+      if (task) {
+        task.completed = !task.completed
+      }
+    },
   },
   extraReducers: {
     [fetchTasks.pending]: (state, action) => {
@@ -112,6 +118,7 @@ export const {
   resetCurrentTask,
   updateTaskByAddingStep,
   toggleStep,
+  toggleStatus,
 } = tasksSlice.actions
 
 export default tasksSlice.reducer
