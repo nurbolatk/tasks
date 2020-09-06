@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import SettingsIcon from '../../components/icons/SettingsIcon'
+import Dropdown from '../../components/molecules/Dropdown'
 
-const ProjectSettingsDropdown = ({ children }) => {
+const ProjectSettingsDropdown = ({ onDeleteProjectClicked, children }) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -11,7 +12,14 @@ const ProjectSettingsDropdown = ({ children }) => {
         onClick={() => setOpen(!open)}>
         <SettingsIcon />
       </button>
-      {open && children}
+      {open && (
+        <Dropdown setOpen={setOpen}>
+          <Dropdown.Item>Edit</Dropdown.Item>
+          <Dropdown.Item handleClick={onDeleteProjectClicked}>
+            Delete
+          </Dropdown.Item>
+        </Dropdown>
+      )}
     </div>
   )
 }

@@ -11,13 +11,9 @@ import {
   selectCurrentTask,
   resetCurrentTask,
 } from './tasksSlice'
-// import BoardTodo from './BoardTodo'
-// import BoardDoing from './BoardDoing'
-// import BoardDone from './BoardDone'
 import BoardTemplate from './BoardTemplate'
 import api from '../../api'
 import ProjectSettingsDropdown from './ProjectSettingsDropdown'
-import Dropdown from '../../components/molecules/Dropdown'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
@@ -37,8 +33,6 @@ const TasksDashboard = () => {
   const project = useSelector(state =>
     state.projects.projects.find(project => project.id === projectId)
   )
-
-  console.log(projectId)
 
   if (!project) {
     return <div>Loading...</div>
@@ -101,14 +95,9 @@ const TasksDashboard = () => {
     <div className="task-dashboard">
       <div className="task-dashboard-header d-flex">
         <h2 className="task-dashboard-header-name">{project.name}</h2>
-        <ProjectSettingsDropdown>
-          <Dropdown>
-            <Dropdown.Item>Edit</Dropdown.Item>
-            <Dropdown.Item handleClick={onDeleteProjectClicked}>
-              Delete
-            </Dropdown.Item>
-          </Dropdown>
-        </ProjectSettingsDropdown>
+        <ProjectSettingsDropdown
+          onDeleteProjectClicked={onDeleteProjectClicked}
+        />
         <button onClick={() => setShow(true)} className="btn btn-primary">
           Add task
         </button>
