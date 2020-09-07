@@ -1,12 +1,14 @@
 import React from 'react'
-import Content from '../molecules/Content'
 import Menu from '../organisms/Menu'
+import AddBook from '../../features/books/AddBook'
 
 const Books = () => {
   return (
     <>
       <Menu />
-      <Content />
+      <div className="content">
+        <AddBook />
+      </div>
     </>
   )
 }

@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import api from '../../api'
+import history from '../../utils/history'
 
 const initialState = {
-  current: null,
   projects: [],
 }
 
@@ -28,33 +28,17 @@ const projectsSlice = createSlice({
   name: 'projects',
   initialState,
   reducers: {
-    setCurrentProject: (state, action) => {
-      state.current = action.payload
-    },
     deleteProject: (state, action) => {
-      if (state.current === action.payload.id) {
-        const projects = state.projects.filter(project =>
-          project.id === action.payload.id ? false : true
-        )
-        if (state.projects[0]) {
-          console.log(
-            'redux',
-            state.current,
-            action.payload.id,
-            state.projects[0].id
-          )
-          state = {
-            current: state.projects[0].id,
-            projects,
-          }
-          action.payload.history.replace(`/tasks/${state.current}`)
-        } else {
-          state = {
-            current: null,
-            projects,
-          }
-          action.payload.history.replace(`/tasks`)
-        }
+      const projects = state.projects.filter(
+        project => project.id !== action.payload.id
+      )
+      state = {
+        projects,
+      }
+      if (state.projects[0]) {
+        history.replace(`/tasks/${state.projects[0].id}`)
+      } else {
+        history.replace(`/tasks`)
       }
     },
     addProject: (state, action) => {
@@ -68,14 +52,6 @@ const projectsSlice = createSlice({
   },
 })
 
-export const {
-  setCurrentProject,
-  deleteProject,
-  addProject,
-} = projectsSlice.actions
-
-export const selectCurrentProject = state => state.projects.current
-export const selectCurrentProjectData = state =>
-  state.projects.projects.find(project => project.id === state.projects.current)
+export const { deleteProject, addProject } = projectsSlice.actions
 
 export default projectsSlice.reducer

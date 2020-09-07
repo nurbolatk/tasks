@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { useRouteMatch, useHistory } from 'react-router-dom'
+import { useRouteMatch } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteProject, setCurrentProject } from '../projects/projectsSlice'
+import { deleteProject } from '../projects/projectsSlice'
 import Modal from '../../components/molecules/Modal'
 import CreateTask from './CreateTask'
 import {
@@ -11,13 +11,9 @@ import {
   selectCurrentTask,
   resetCurrentTask,
 } from './tasksSlice'
-// import BoardTodo from './BoardTodo'
-// import BoardDoing from './BoardDoing'
-// import BoardDone from './BoardDone'
 import BoardTemplate from './BoardTemplate'
 import api from '../../api'
 import ProjectSettingsDropdown from './ProjectSettingsDropdown'
-import Dropdown from '../../components/molecules/Dropdown'
 
 const TasksDashboard = () => {
   const match = useRouteMatch()
@@ -25,15 +21,10 @@ const TasksDashboard = () => {
   const dispatch = useDispatch()
   const [show, setShow] = useState(false)
   const currentTask = useSelector(selectCurrentTask)
-  const history = useHistory()
 
   useEffect(() => {
     dispatch(fetchTasks())
   }, [dispatch])
-
-  useEffect(() => {
-    dispatch(setCurrentProject(projectId))
-  }, [dispatch, projectId])
 
   const tasks = useSelector(state =>
     state.tasks.tasks.filter(task => task.project.id === projectId)
@@ -93,8 +84,7 @@ const TasksDashboard = () => {
   const onDeleteProjectClicked = async () => {
     try {
       await api.delete('/projects/id', projectId)
-      dispatch(deleteProject({ id: projectId, history }))
-      // history.replace('/tasks')
+      dispatch(deleteProject({ id: projectId }))
     } catch (error) {
       console.error(error.message)
       alert(error.message)
@@ -105,14 +95,9 @@ const TasksDashboard = () => {
     <div className="task-dashboard">
       <div className="task-dashboard-header d-flex">
         <h2 className="task-dashboard-header-name">{project.name}</h2>
-        <ProjectSettingsDropdown>
-          <Dropdown>
-            <Dropdown.Item>Edit</Dropdown.Item>
-            <Dropdown.Item handleClick={onDeleteProjectClicked}>
-              Delete
-            </Dropdown.Item>
-          </Dropdown>
-        </ProjectSettingsDropdown>
+        <ProjectSettingsDropdown
+          onDeleteProjectClicked={onDeleteProjectClicked}
+        />
         <button onClick={() => setShow(true)} className="btn btn-primary">
           Add task
         </button>
@@ -135,7 +120,7 @@ const TasksDashboard = () => {
         />
       </div>
       <Modal show={show} setShow={setShow} title="Create a new task">
-        <CreateTask />
+        <CreateTask projectId={projectId} />
       </Modal>
     </div>
   )

@@ -6,7 +6,7 @@ import { addProject } from './projectsSlice'
 
 const initialState = {
   name: '',
-  color: '#00Af00',
+  color: '#0099AD',
 }
 
 const reducer = (state, action) => {
