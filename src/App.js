@@ -11,6 +11,7 @@ import TaskFull from './features/tasks/TaskFull'
 import { useSelector } from 'react-redux'
 import { selectCurrentTask } from './features/tasks/tasksSlice'
 import history from './utils/history'
+import AddBookDouble from './features/books/AddBookDouble'
 
 const App = () => {
   const currentTask = useSelector(selectCurrentTask)
@@ -25,6 +26,9 @@ const App = () => {
         <Switch>
           <Route path="/books">
             <Books />
+          </Route>
+          <Route path="/booksDouble">
+            <AddBookDouble />
           </Route>
           <Route path="/tasks">
             <Tasks />
