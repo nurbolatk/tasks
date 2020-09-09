@@ -78,22 +78,15 @@ const CreateTask = ({ projectId }) => {
           handleChange={handleChange}
         />
         <div className="mb-4 grid grid-2">
-          <div>
-            <label className="form-label" htmlFor="priority">
-              Task priority
-            </label>
-            <select
-              disabled={loading}
-              name="priority"
-              id="priority"
-              onChange={handleChange}
-              value={values.priority}
-              className="form-field">
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-            </select>
-          </div>
+          <Form.Select
+            value={values.priority}
+            handleChange={handleChange}
+            fieldData={{
+              name: 'priority',
+              label: 'Task priority',
+            }}
+            options={['Low', 'Medium', 'High']}
+          />
           <Form.Entry
             fieldData={{
               type: 'datetime',
