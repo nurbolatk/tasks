@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteProject } from '../projects/projectsSlice'
 import Modal from '../../components/molecules/Modal'
-import CreateTask from './CreateTask'
+import CreateTask from './CreateTask2'
 import {
   fetchTasks,
   setCurrentTask,

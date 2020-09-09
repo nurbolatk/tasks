@@ -9,9 +9,6 @@ const Sidebar = () => {
           <Link to="/books">Books</Link>
         </p>
         <p>
-          <Link to="/booksdouble">Taet led</Link>
-        </p>
-        <p>
           <Link to="/projects">Projects</Link>
         </p>
         <Link to="/tasks">Tasks</Link>

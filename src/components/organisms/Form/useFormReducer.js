@@ -1,5 +1,7 @@
 import React from 'react'
 
+const clearFields = { type: 'CLEAR_FIELDS' }
+
 export default function useFormReducer(initialValues) {
   const reducer = (state, action) => {
     switch (action.type) {
@@ -8,6 +10,8 @@ export default function useFormReducer(initialValues) {
           ...state,
           [action.name]: action.value,
         }
+      case 'CLEAR_FIELDS':
+        return initialValues
       default:
         return state
     }
@@ -17,5 +21,9 @@ export default function useFormReducer(initialValues) {
     const { name, value } = e.target
     setFields({ type: 'CHANGE_FIELD', name, value })
   }
-  return [fields, handleChange]
+
+  const actions = {
+    clearFields: () => setFields(clearFields),
+  }
+  return [fields, handleChange, actions]
 }
